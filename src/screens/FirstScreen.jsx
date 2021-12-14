@@ -8,7 +8,9 @@ import {COLORS} from "../utils/colors";
 export default function FirstScreen() {
     const navigation = useNavigation()
     useEffect(() => {
-        navigation.navigate('Register')
+        setTimeout(() => {
+            navigation.navigate('Register')
+        }, 1000)
     }, [])
 
     return (

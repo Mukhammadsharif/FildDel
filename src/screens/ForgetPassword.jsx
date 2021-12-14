@@ -46,7 +46,7 @@ export default function ForgetPassword() {
                                 <SecondSubmitButton
                                     text={'Войти'}
                                     submitFunction={() => {
-                                       navigation.navigate('Login')
+                                       navigation.navigate('TabScreen')
                                     }}/>
                             )}
                         </>
