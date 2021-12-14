@@ -61,5 +61,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '300',
         marginTop: pixelSizeVertical(19),
+        fontFamily: 'Helvetica',
     }
 })

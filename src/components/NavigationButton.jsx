@@ -16,10 +16,11 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 0
+        marginTop: 15
     },
     text: {
         color: COLORS.main,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'Helvetica'
     }
 })

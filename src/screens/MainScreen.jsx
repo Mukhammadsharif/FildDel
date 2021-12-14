@@ -6,19 +6,9 @@ import {COLORS} from "../utils/colors"
 import { Card } from "react-native-paper"
 import {Formik} from "formik";
 import InputLight from "../components/InputLight";
-import {
-    CombinedIcon,
-    LeftRight,
-    EnergyIcon,
-    LinesIcon,
-    Dostavista,
-    GTD,
-    RGGroup,
-    TNT,
-    PEK,
-    Baikal, KTC, FastPoint, Polygon
-} from "../components/Svgs";
+import {CombinedIcon, LeftRight, Polygon } from "../components/Svgs";
 import SubmitButton from "../components/SubmitButton";
+import Logos from "../components/Logos";
 
 export default function MainScreen() {
     return (
@@ -74,55 +64,7 @@ export default function MainScreen() {
                  </Formik>
              </Card>
 
-             <View style={styles.logosContainer}>
-                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                     <View style={{flex: 1}}>
-                            <View style={styles.card}>
-                                <EnergyIcon/>
-                            </View>
-
-                            <View style={styles.card}>
-                                <LinesIcon/>
-                            </View>
-
-
-                             <View style={styles.card}>
-                                 <Dostavista/>
-                             </View>
-
-                             <View style={styles.card}>
-                                 <GTD/>
-                             </View>
-
-                             <View style={styles.card}>
-                                 <RGGroup/>
-                             </View>
-                     </View>
-
-                     <View style={{flex: 1}}>
-                            <View style={styles.card}>
-                                <TNT/>
-                            </View>
-
-                            <View style={styles.card}>
-                                <PEK/>
-                            </View>
-
-
-                             <View style={styles.card}>
-                                 <Baikal/>
-                             </View>
-
-                             <View style={styles.card}>
-                                 <KTC/>
-                             </View>
-
-                             <View style={styles.card}>
-                                 <FastPoint/>
-                             </View>
-                     </View>
-                 </View>
-             </View>
+             <Logos/>
 
              <Text style={styles.description}>Еще 1348 транспортных компаний</Text>
         </ScrollView>
@@ -133,7 +75,6 @@ export default function MainScreen() {
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: pixelSizeHorizontal(15),
-        paddingVertical: pixelSizeVertical(25),
         backgroundColor: COLORS.mainScreenBackground,
         flex: 1,
     },
@@ -185,32 +126,6 @@ const styles = StyleSheet.create({
         borderColor: COLORS.inputBackgroundColor,
         borderRadius: 0,
         marginTop: 5,
-    },
-    logosContainer: {
-        height: 470,
-        width: '100%',
-        marginTop: 40,
-        shadowColor: COLORS.shadowColor,
-        shadowOffset: {width: 5, height: 5},
-        shadowOpacity: 0.8,
-        shadowRadius: 5,
-        borderColor: COLORS.shadowColor,
-        borderWidth: 2,
-        borderRadius: 0,
-        backgroundColor: '#FFFFFF'
-    },
-    card: {
-        width: '100%',
-        height: '20%',
-        shadowColor: COLORS.shadowColor,
-        shadowOffset: {width: 5, height: 5},
-        shadowOpacity: 0.8,
-        shadowRadius: 5,
-        borderColor: COLORS.shadowColor,
-        borderWidth: 1,
-        borderRadius: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     description: {
         fontSize: 16,

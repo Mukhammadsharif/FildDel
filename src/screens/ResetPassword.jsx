@@ -64,5 +64,6 @@ const styles = StyleSheet.create({
         lineHeight: 32,
         fontWeight: 'bold',
         textAlign: 'center',
+        fontFamily: 'Helvetica',
     },
 })

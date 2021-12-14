@@ -25,5 +25,6 @@ const styles = StyleSheet.create({
     text: {
         color: COLORS.submitButtonText,
         fontSize: 16,
+        fontFamily: 'Helvetica',
     }
 })

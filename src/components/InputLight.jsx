@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 15,
         top: 9,
+        fontFamily: 'Helvetica',
     },
     inputStyle: {
         width: '100%',

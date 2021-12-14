@@ -100,6 +100,9 @@ function TabScreen() {
                 height: 60,
                 paddingBottom: 10,
             },
+            tabBarLabelStyle: {
+                fontFamily: 'Helvetica'
+            },
             tabBarHideOnKeyboard: true,
         }}>
             <Tab.Screen

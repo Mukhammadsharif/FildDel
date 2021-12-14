@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
         lineHeight: 32,
         fontWeight: 'bold',
         textAlign: 'center',
+        fontFamily: 'Helvetica',
     },
     cellStyle: {
         borderWidth: 1,
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
         height: 84,
         backgroundColor: COLORS.inputBackgroundColor,
         borderColor: COLORS.inputBackgroundColor,
+        borderRadius: 3
     },
     inputContainer: {
         alignItems: 'center',
@@ -98,12 +100,14 @@ const styles = StyleSheet.create({
     description: {
         textAlign: 'center',
         fontSize: 16,
-        marginTop: 10
+        marginTop: 10,
+        fontFamily: 'Helvetica',
     },
     textStyle: {
         fontSize: 41,
         fontWeight: 'bold',
-        color: 'black'
+        color: 'black',
+        fontFamily: 'Helvetica',
     },
     cellStyleFocused:{
         borderWidth: 1,
