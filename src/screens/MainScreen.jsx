@@ -1,19 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {View, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView} from "react-native"
-import {pixelSizeHorizontal, pixelSizeVertical} from "../utils/normalizeStyle";
+import { pixelSizeHorizontal } from "../utils/normalizeStyle";
 import MainScreenBanner from "../components/MainScreenBanner";
-import {COLORS} from "../utils/colors"
+import { COLORS } from "../utils/colors"
 import { Card } from "react-native-paper"
-import {Formik} from "formik";
+import { Formik } from "formik";
 import InputLight from "../components/InputLight";
-import {CombinedIcon, LeftRight, Polygon } from "../components/Svgs";
+import {
+    BigTruck,
+    Box,
+    CombinedIcon,
+    Convert,
+    Dangerous,
+    LeftRight,
+    Paket,
+    Palet,
+    Telejka,
+    Truck
+} from "../components/Svgs";
 import SubmitButton from "../components/SubmitButton";
 import Logos from "../components/Logos";
+import BigDropDown from "../components/BigDropDown";
 
 export default function MainScreen() {
+    const [selectedValue, setSelectedValue] = useState('')
+    const data = [
+        { name: 'Конверт', size: '35x25x5 см / до 2 кг', description: 'Маленькие предметы: документы,бижутерия, аксессуары', icon: (<Convert/>) },
+        { name: 'Пакет', size: '40х30х20 см / до 5 кг', description: 'Небольшие отправления обувь, одежда, мелкая техника', icon: (<Paket/>) },
+        { name: 'Коробка', size: '60х40х30 см / до 20 кг', description: 'Средний размер: набор посуды, домашний текстиль', icon: (<Box/>) },
+        { name: 'Тележка', size: '100x50x50 см / до 50 кг', description: 'Тяжелая большая посылка: велосипед,крупная кухонная техника', icon: (<Telejka/>) },
+        { name: 'Палет', size: '120x80x80 см / от 50 кг', description: 'Крупный груз: мебель, крупная бытовая техника', icon: (<Palet/>) },
+        { name: 'Фургон', size: '200x90x90 см / от 5 тонн', description: 'Крупный груз: мебель, крупная техника,инструменты', icon: (<Truck/>) },
+        { name: 'Фура', size: '300x100x100 см / от 10 тонн', description: 'Крупный груз: крупная техника, машины, спецтехника', icon: (<BigTruck/>) },
+        { name: 'Опасный груз', size: '', description: 'Взрывчатые материалы, газы,легковоспламеняющиеся жидкости', icon: (<Dangerous/>) },
+    ]
+
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true}>
             <MainScreenBanner/>
 
             <Text style={styles.text}>Сравнить цены</Text>
@@ -47,14 +71,13 @@ export default function MainScreen() {
                                      placeholderTextColor={COLORS.placeholderTextColor}/>
 
                              <Text style={styles.inputLabel}>Вид груза</Text>
-                             <InputLight
-                                     name={'convert'}
-                                     type={'text'}
-                                     keyboard="default"
-                                     input={styles.input}
-                                     placeholder={'Конверт'}
-                                     placeholderTextColor={COLORS.placeholderTextColor}
-                                     button={() => <Polygon/>}/>
+
+                             <BigDropDown
+                                 selectedValue={selectedValue}
+                                 setSelectedValue={setSelectedValue}
+                                 placeholder={'Конверт'}
+                                 data={data}
+                             />
 
                              <SubmitButton
                                 text={'Сравнить цены'}

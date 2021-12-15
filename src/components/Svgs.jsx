@@ -1,6 +1,20 @@
 import React from 'react'
 /* eslint-disable */
-import Svg, {Circle, ClipPath, Defs, G, LinearGradient, Mask, Path, Pattern, Rect, Stop, Use, Image} from 'react-native-svg'
+import Svg, {
+  Circle,
+  ClipPath,
+  Defs,
+  G,
+  LinearGradient,
+  Mask,
+  Path,
+  Pattern,
+  Rect,
+  Stop,
+  Use,
+  Image,
+  Ellipse
+} from 'react-native-svg'
 
 
 export const MainLogo = (props) => (
@@ -1470,5 +1484,215 @@ export const StackLogo = (props) => (
       d="M82.37.636c1.557.512 2.824 1.45 3.788 2.82A9.854 9.854 0 0 1 87.74 7.04a17 17 0 0 1 .42 3.677c0 2.955-.593 5.454-1.78 7.502-1.613 2.764-4.097 4.14-7.46 4.14h-9.58V.15h9.593c1.372.024 2.521.185 3.436.487Zm-8.517 3.368v14.493h4.289c2.194 0 3.727-1.08 4.592-3.24.476-1.184.71-2.596.71-4.231 0-2.259-.352-3.992-1.062-5.208-.711-1.209-2.127-1.814-4.24-1.814h-4.29ZM115.689 6.25c1.149.511 2.095 1.32 2.843 2.43.673.975 1.112 2.11 1.31 3.393.117.753.161 1.839.142 3.258h-11.978c.068 1.647.643 2.801 1.719 3.467.655.414 1.446.617 2.373.617.976 0 1.774-.253 2.385-.752.334-.272.631-.648.884-1.13h4.388c-.117.975-.649 1.962-1.594 2.968-1.471 1.598-3.535 2.394-6.187 2.394-2.188 0-4.122-.672-5.791-2.017-1.675-1.346-2.509-3.536-2.509-6.571 0-2.844.754-5.022 2.268-6.54 1.508-1.518 3.473-2.277 5.884-2.277 1.428-.006 2.719.247 3.863.76Zm-6.434 3.707c-.606.623-.989 1.475-1.144 2.542h7.411c-.081-1.141-.458-2.005-1.144-2.597-.686-.593-1.532-.883-2.552-.883-1.106 0-1.959.315-2.571.938Z"
       fill="#49AE49"
     />
+  </Svg>
+)
+
+export const Convert = (props) => (
+  <Svg
+    width={23}
+    height={16}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path d="M0 0V15.999h23V0H0Z" fill="#BD9A77" />
+    <Path d="m11.5 6.857 11.26 8.953.24.19H0l11.5-9.143Z" fill="#CAA785" />
+    <Path d="M11.74 10.971.24.255 0 0h23L11.74 10.971Z" fill="#E1BE9C" />
+  </Svg>
+)
+
+export const Paket = (props) => (
+  <Svg
+    width={23}
+    height={20}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path d="M0 0h23v10.6a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V0Z" fill="#BD9A77" />
+    <Path
+      d="M19.828 2.4 22.155 0H23v6l-3.172-3.6ZM3.173 2.4.846 0H0v6l1.102-.8 2.07-2.8Z"
+      fill="#E1BE9C"
+    />
+    <Path d="M0 5.2h23V17a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V5.2Z" fill="#CAA785" />
+    <Ellipse cx={6.742} cy={8.4} rx={1.19} ry={1.2} fill="#AA886A" />
+    <Ellipse cx={16.259} cy={8.4} rx={1.19} ry={1.2} fill="#AA886A" />
+    <Path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M16.214 7.902a.5.5 0 0 1 .543.453c.207 2.303-.347 4.09-1.344 5.311a4.905 4.905 0 0 1-3.814 1.834 4.905 4.905 0 0 1-3.814-1.834c-.996-1.22-1.55-3.008-1.343-5.31a.5.5 0 1 1 .996.089c-.19 2.097.322 3.61 1.122 4.589.801.98 1.922 1.466 3.04 1.466 1.116 0 2.237-.485 3.038-1.466.8-.98 1.312-2.492 1.123-4.59a.5.5 0 0 1 .453-.542Z"
+      fill="#E1BE9C"
+    />
+    <Path
+      d="M19.828 5.2V2.4l2.578 2.8h-2.578ZM3.173 5.2V2.4L.793 5.2h2.38Z"
+      fill="#AA886A"
+    />
+  </Svg>
+)
+
+export const Box = (props) => (
+  <Svg
+    width={23}
+    height={20}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path d="M0 20V5.756h23V20H0Z" fill="#BD9A77" />
+    <Path
+      d="M9.121 17.626V20h4.759v-2.374l-.793.791-1.587-1.582-1.586 1.582-.793-.79ZM13.879 7.932V5.756H9.12v2.176l.793-.791L11.5 8.723l1.586-1.582.793.791Z"
+      fill="#CAA785"
+    />
+    <Path d="M3.966.217 0 5.757h23L19.035.216H3.965Z" fill="#CAA785" />
+    <Path fill="#E1BE9C" d="M9.046 0h5.107v5.944H9.046z" />
+  </Svg>
+)
+
+
+export const Telejka = (props) => (
+  <Svg
+    width={23}
+    height={20}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M.159.125c.197-.18.5-.164.677.037l2.26 2.562c.08.09.123.206.123.326v14.097h19.302c.264 0 .479.218.479.488s-.215.488-.48.488h-.839v.891c0 .27-.214.488-.479.488a.484.484 0 0 1-.48-.488v-.891H2.74a.484.484 0 0 1-.48-.488V3.237L.124.814a.494.494 0 0 1 .036-.69Z"
+      fill="#605952"
+    />
+    <Ellipse cx={2.363} cy={18.029} rx={1.884} ry={1.971} fill="#605952" />
+    <Ellipse cx={2.363} cy={18.029} rx={1.13} ry={1.183} fill="#867869" />
+    <Ellipse cx={21.391} cy={19.015} rx={0.942} ry={0.985} fill="#605952" />
+    <Path fill="#CAA785" d="M4.247 2.656h9.796v7.095H4.247z" />
+    <Path
+      d="M7.638 5.415V2.656h3.014v2.76L9.145 4.43l-1.507.985Z"
+      fill="#E1BE9C"
+    />
+    <Path fill="#CAA785" d="M14.043 5.81h6.405v11.431h-6.405z" />
+    <Path
+      d="M15.927 8.568V5.81h3.014v2.76l-1.507-.986-1.507.985Z"
+      fill="#E1BE9C"
+    />
+    <Path fill="#BD9A77" d="M4.247 9.751h9.796v7.489H4.247z" />
+    <Path
+      d="M7.638 12.664V9.75h3.014v2.913l-1.507-1.04-1.507 1.04Z"
+      fill="#E1BE9C"
+    />
+  </Svg>
+)
+
+export const Palet = (props) => (
+  <Svg
+    width={23}
+    height={20}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path fill="#CAA785" d="M6.741.001h10.31v7.2H6.741z" />
+    <Path d="M10.31 2.8V0h3.172v2.8l-1.586-1-1.586 1Z" fill="#E1BE9C" />
+    <Path fill="#CAA785" d="M11.896 7.2h9.914v7.2h-9.914z" />
+    <Path d="M15.328 10V7.2h3.05V10l-1.525-1-1.525 1Z" fill="#E1BE9C" />
+    <Path fill="#BD9A77" d="M1.982 7.2h9.914v7.2H1.982z" />
+    <Path d="M5.414 10V7.2h3.05V10L6.94 9l-1.525 1Z" fill="#E1BE9C" />
+    <Path
+      fill="#867869"
+      d="M1.586 16h2.379v2.4H1.586zM10.31 16h2.379v2.4H10.31zM19.035 16h2.379v2.4h-2.379z"
+    />
+    <Path fill="#AA886A" d="M0 18.4h23V20H0zM0 14.4h23V16H0z" />
+  </Svg>
+)
+
+export const Truck = (props) => (
+  <Svg
+    width={23}
+    height={16}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path d="M19.5 2.5h-6V12H0v2.5h23V8l-1.5-1-2-4.5Z" fill="#AA886A" />
+    <Path d="M0 0v11.5h13V0H0Z" fill="#CAA785" />
+    <Path d="M15 7.5v-4h3.5l1.5 4h-5Z" fill="#E1BE9C" />
+    <Circle
+      cx={4.5}
+      cy={13.5}
+      r={2.25}
+      fill="#867869"
+      stroke="#F9F9F9"
+      strokeWidth={0.5}
+    />
+    <Circle
+      cx={19.5}
+      cy={13.5}
+      r={2.25}
+      fill="#867869"
+      stroke="#F9F9F9"
+      strokeWidth={0.5}
+    />
+  </Svg>
+)
+
+export const BigTruck = (props) => (
+  <Svg
+    width={23}
+    height={14}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path d="M21.5 3h-5v6.5H0V12h23V6.5l-.5-1-1-2.5Z" fill="#AA886A" />
+    <Path d="M0 .5V9h16V.5H0Z" fill="#CAA785" />
+    <Path d="M18 6.5v-3h2.8l1.2 3h-4Z" fill="#E1BE9C" />
+    <Circle
+      cx={4.5}
+      cy={11}
+      r={2.25}
+      fill="#867869"
+      stroke="#F9F9F9"
+      strokeWidth={0.5}
+    />
+    <Circle
+      cx={19.5}
+      cy={11}
+      r={2.25}
+      fill="#867869"
+      stroke="#F9F9F9"
+      strokeWidth={0.5}
+    />
+  </Svg>
+)
+
+export const Dangerous = (props) => (
+  <Svg
+    width={23}
+    height={14}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path d="M21.5 3h-5v6.5H0V12h23V6.5l-.5-1-1-2.5Z" fill="#AA886A" />
+    <Path d="M0 .5V9h16V.5H0Z" fill="#CAA785" />
+    <Path d="M18 6.5v-3h2.8l1.2 3h-4Z" fill="#E1BE9C" />
+    <Circle
+      cx={4.5}
+      cy={11}
+      r={2.25}
+      fill="#867869"
+      stroke="#F9F9F9"
+      strokeWidth={0.5}
+    />
+    <Circle
+      cx={19.5}
+      cy={11}
+      r={2.25}
+      fill="#867869"
+      stroke="#F9F9F9"
+      strokeWidth={0.5}
+    />
+    <Path d="m8 4 .6-2L6 5h1.3l-.4 2 2.5-3H8Z" fill="#fff" />
   </Svg>
 )

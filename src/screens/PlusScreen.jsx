@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity } fr
 import { pixelSizeHorizontal, pixelSizeVertical } from "../utils/normalizeStyle"
 import { COLORS } from "../utils/colors"
 import InputLight from "../components/InputLight"
-import { LeftRight, Polygon } from "../components/Svgs"
+import {BigTruck, Box, Convert, Dangerous, LeftRight, Paket, Palet, Polygon, Telejka, Truck} from "../components/Svgs"
 import { Formik } from "formik"
 import Switch from "../components/Switch"
 import Radio from "../components/Radio"
@@ -12,6 +12,8 @@ import SubmitButton from "../components/SubmitButton"
 import CustomModal from '../components/Modal'
 import UnSuccessContainer from "../components/UnSuccessContainer"
 import SuccessContainer from "../components/SuccessContainer"
+import DropDown from "../components/DropDown";
+import BigDropDown from "../components/BigDropDown";
 
 export default function PlusScreen() {
     const [toggle, setToggle] = useState(false)
@@ -20,6 +22,23 @@ export default function PlusScreen() {
     const [modalVisible, setModalVisible] = useState(false)
     const [success, setSuccess] = useState(true)
     const [unSuccess, setUnSuccess] = useState(false)
+    const [delivery, setDelivery] = useState('')
+    const [cargo, setCargo] = useState('')
+    const [typeCargo, setTypeCargo] = useState('')
+    const [selectedValue, setSelectedValue] = useState('')
+    const data = [
+        { name: 'Конверт', size: '35x25x5 см / до 2 кг', description: 'Маленькие предметы: документы,бижутерия, аксессуары', icon: (<Convert/>) },
+        { name: 'Пакет', size: '40х30х20 см / до 5 кг', description: 'Небольшие отправления обувь, одежда, мелкая техника', icon: (<Paket/>) },
+        { name: 'Коробка', size: '60х40х30 см / до 20 кг', description: 'Средний размер: набор посуды, домашний текстиль', icon: (<Box/>) },
+        { name: 'Тележка', size: '100x50x50 см / до 50 кг', description: 'Тяжелая большая посылка: велосипед,крупная кухонная техника', icon: (<Telejka/>) },
+        { name: 'Палет', size: '120x80x80 см / от 50 кг', description: 'Крупный груз: мебель, крупная бытовая техника', icon: (<Palet/>) },
+        { name: 'Фургон', size: '200x90x90 см / от 5 тонн', description: 'Крупный груз: мебель, крупная техника,инструменты', icon: (<Truck/>) },
+        { name: 'Фура', size: '300x100x100 см / от 10 тонн', description: 'Крупный груз: крупная техника, машины, спецтехника', icon: (<BigTruck/>) },
+        { name: 'Опасный груз', size: '', description: 'Взрывчатые материалы, газы,легковоспламеняющиеся жидкости', icon: (<Dangerous/>) },
+    ]
+
+    const deliveryData = ['Склад-склад', 'Склад-дверь', 'От двери до двери', 'Дверь-склад']
+    const cargoData = ['Автомашины', 'Арматура', 'Бумага', 'Бытовая техника', 'Вагонка']
 
     useEffect(() => {
         setTimeout(() => {
@@ -37,20 +56,33 @@ export default function PlusScreen() {
                 <View style={{paddingHorizontal: 15}}>
                     <Text style={styles.title}>Подбор доставки</Text>
 
-                     <Formik initialValues={{from: '', to: '', convert: '', comments: '',}} onSubmit={() => {}}>
-                        {({ handleSubmit }) => (
+                     <Formik
+                         initialValues={{from: '',
+                                         to: '',
+                                         shape: '',
+                                         length: '',
+                                         width: '',
+                                         height: '',
+                                         comments: '',
+                                         size: '',
+                                         count: '',
+                                         weight: '',
+                                        }}
+                         onSubmit={() => {}}>
+                        {({ handleSubmit, setFieldValue }) => (
 
                             <View>
                                 <Text style={styles.inputLabel}>Откуда</Text>
 
                                 <View style={styles.addressContainer}>
                                     <InputLight
-                                        name={'from'}
+                                        name='from'
                                         type={'text'}
                                         keyboard="default"
                                         input={styles.addressInput}
                                         placeholder={'Введите адрес отправления'}
-                                        placeholderTextColor={COLORS.placeholderTextColor}/>
+                                        placeholderTextColor={COLORS.placeholderTextColor}
+                                        onChange={(e) => setFieldValue('from', e)}/>
 
                                     <TouchableOpacity style={styles.leftRightContainer}>
                                         <LeftRight/>
@@ -65,52 +97,44 @@ export default function PlusScreen() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder={'Введите адрес получателя'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    onChange={(e) => setFieldValue('to', e)}/>
 
 
                                 <Text style={styles.inputLabel}>Способ доставки</Text>
 
-                                <InputLight
-                                    name={'to'}
-                                    type={'text'}
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder={'От двери до двери'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    button={() => <Polygon/>}/>
+                                <DropDown
+                                    placeholder={deliveryData[0]}
+                                    data={deliveryData}
+                                    selectedValue={delivery}
+                                    setSelectedValue={setDelivery}/>
 
 
 
                                 <Text style={styles.inputLabel}>Вид груза</Text>
 
-                                <InputLight
-                                    name={'to'}
-                                    type={'text'}
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder={'Конверт'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    button={() => <Polygon/>}/>
+                                <BigDropDown
+                                     selectedValue={selectedValue}
+                                     setSelectedValue={setSelectedValue}
+                                     placeholder={'Конверт'}
+                                     data={data}/>
 
 
                                 <View style={styles.loadContainer}>
                                     <View style={styles.load}>
                                         <Text style={styles.inputLabel}>Груз</Text>
-                                        <InputLight
-                                            name={'to'}
-                                            type={'text'}
-                                            keyboard="default"
-                                            input={styles.input}
-                                            placeholder={'Автошины'}
-                                            placeholderTextColor={COLORS.placeholderTextColor}
-                                            button={() => <Polygon/>}/>
+                                        <DropDown
+                                            data={cargoData}
+                                            selectedValue={cargo}
+                                            setSelectedValue={setCargo}
+                                        />
                                     </View>
 
                                     <View style={styles.weight}>
                                         <Text style={styles.inputLabel}>Вес, кг</Text>
 
                                         <InputLight
-                                            name={'to'}
+                                            name={'weight'}
                                             type={'text'}
                                             keyboard="default"
                                             input={styles.input}
@@ -124,7 +148,7 @@ export default function PlusScreen() {
                                         <Text style={!toggle ? styles.inputLabel : styles.inputLabelDisabled}>Объем, cм³</Text>
 
                                         <InputLight
-                                            name={'to'}
+                                            name={'size'}
                                             type={'text'}
                                             keyboard="default"
                                             input={styles.input}
@@ -136,7 +160,7 @@ export default function PlusScreen() {
                                         <Text style={toggle ? styles.inputLabel : styles.inputLabelDisabled}>Кол-во мест</Text>
 
                                         <InputLight
-                                            name={'to'}
+                                            name={'count'}
                                             type={'text'}
                                             keyboard="default"
                                             input={styles.input}
@@ -158,7 +182,7 @@ export default function PlusScreen() {
                                 <View style={styles.loadContainer}>
                                     <View style={{flex: 1, marginLeft: 5}}>
                                         <InputLight
-                                            name={'to'}
+                                            name={'length'}
                                             type={'text'}
                                             keyboard="default"
                                             input={styles.input}
@@ -168,7 +192,7 @@ export default function PlusScreen() {
 
                                     <View style={{flex: 1, marginHorizontal: 5}}>
                                         <InputLight
-                                            name={'to'}
+                                            name={'width'}
                                             type={'text'}
                                             keyboard="default"
                                             input={styles.input}
@@ -178,7 +202,7 @@ export default function PlusScreen() {
 
                                     <View style={{flex: 1, marginRight: 5}}>
                                         <InputLight
-                                            name={'to'}
+                                            name={'height'}
                                             type={'text'}
                                             keyboard="default"
                                             input={styles.input}
@@ -190,8 +214,7 @@ export default function PlusScreen() {
                                 <View style={styles.insuranceContainer}>
                                     <View style={styles.insurance}>
                                         <Radio radio={firstRadio} setRadio={() => {
-                                            setFirstRadio(true)
-                                            setSecondRadio(false)
+                                            setFirstRadio(!firstRadio)
                                         }}/>
 
                                         <Text style={styles.insuranceText}>Обрешетка груза</Text>
@@ -199,8 +222,7 @@ export default function PlusScreen() {
 
                                     <View style={styles.insurance}>
                                         <Radio radio={secondRadio} setRadio={() => {
-                                            setFirstRadio(false)
-                                            setSecondRadio(true)
+                                            setSecondRadio(!secondRadio)
                                         }}/>
 
                                         <Text style={styles.insuranceText}>Страховка груза</Text>
@@ -218,8 +240,7 @@ export default function PlusScreen() {
                                         placeholder={'Введите текст'}
                                         placeholderTextColor={COLORS.placeholderTextColor}
                                         multiline={true}
-                                        maxLength={500}
-                                        />
+                                        maxLength={500}/>
                                 </View>
 
                                 <SubmitButton text={'Сравнить цены'} submitFunction={() => setModalVisible(true)}/>
