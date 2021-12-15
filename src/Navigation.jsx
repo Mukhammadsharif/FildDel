@@ -15,8 +15,10 @@ import ObservationScreen from './screens/ObservationScreen'
 import PlusScreen from './screens/PlusScreen'
 import HistoryScreen  from './screens/HistoryScreen'
 import MoreScreen from './screens/MoreScreen'
+import FormalizeOrder from "./screens/FormalizeOrder"
 import {IconHistory, IconHome, IconMore, IconObservation, IconPlus} from "./components/Svgs";
 import {COLORS} from "./utils/colors";
+import StackHeader from "./components/StackHeader";
 
 
 
@@ -87,6 +89,18 @@ export default function Navigation() {
                             },
                             headerTitle: () => <TabHeaderTitle/>,
                         }}/>
+
+                    <Stack.Screen
+                        name={'FormalizeOrder'}
+                        component={FormalizeOrder}
+                        options={{
+                            headerLeft: () => null,
+                            headerStyle: {
+                                height: 93,
+                                borderBottomWidth: 2,
+                            },
+                            headerTitle: () => <StackHeader/>,
+                    }}/>
             </Stack.Navigator>
         </NavigationContainer>
     )

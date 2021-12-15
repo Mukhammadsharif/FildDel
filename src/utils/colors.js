@@ -8,5 +8,10 @@ export const COLORS = {
     submitButtonText: '#7D7D7D',
     iconInactiveColor: '#A1A2A1',
     shadowColor: '#F5F5F5',
-    mainScreenBackground: '#F9F9F9',
+    mainScreenBackground: '#FDFDFD',
+    inputLabelDisabled: '#7D7D7D',
+    unSuccessText: '#EF2F2F',
+    borderColor: 'rgba(125,125,125,0.2)',
+    cardSelected: '#F3F3F3',
+
 }

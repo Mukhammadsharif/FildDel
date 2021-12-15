@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
         paddingBottom: pixelSizeVertical(310),
         backgroundColor: COLORS.mainBackground,
         flex: 1,
-        justifyContent: 'space-around'
     },
     input : {
         height: 50,
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: COLORS.inputBackgroundColor,
         borderRadius: 0,
+        marginTop: 30
     },
     title: {
         color: COLORS.main,

@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         lineHeight: 22,
         height: 67,
+        fontFamily: 'Helvetica',
     },
     addressContainer: {
         flexDirection: 'row',

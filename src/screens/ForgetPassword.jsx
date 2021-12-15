@@ -38,17 +38,19 @@ export default function ForgetPassword() {
                                     onFulfill={() => setSubmitted(true)}/>
                             </View>
 
-                            {!submitted ? (
-                                <SubmitButton
-                                    text={'Отправить еще раз'}
-                                    submitFunction={handleSubmit}/>
-                            ) : (
-                                <SecondSubmitButton
-                                    text={'Войти'}
-                                    submitFunction={() => {
-                                       navigation.navigate('TabScreen')
-                                    }}/>
-                            )}
+                            <View style={{marginTop: 25}}>
+                                {!submitted ? (
+                                    <SubmitButton
+                                        text={'Отправить еще раз'}
+                                        submitFunction={handleSubmit}/>
+                                ) : (
+                                    <SecondSubmitButton
+                                        text={'Войти'}
+                                        submitFunction={() => {
+                                           navigation.navigate('TabScreen')
+                                        }}/>
+                                )}
+                            </View>
                         </>
                     )}
                 </Formik>
@@ -68,7 +70,6 @@ const styles = StyleSheet.create({
         paddingBottom: pixelSizeVertical(202),
         backgroundColor: COLORS.mainBackground,
         flex: 1,
-        justifyContent: 'space-around'
     },
     input : {
         height: 50,
@@ -91,7 +92,8 @@ const styles = StyleSheet.create({
         height: 84,
         backgroundColor: COLORS.inputBackgroundColor,
         borderColor: COLORS.inputBackgroundColor,
-        borderRadius: 3
+        borderRadius: 3,
+        marginTop: 30,
     },
     inputContainer: {
         alignItems: 'center',
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     description: {
         textAlign: 'center',
         fontSize: 16,
-        marginTop: 10,
+        marginTop: 20,
         fontFamily: 'Helvetica',
     },
     textStyle: {
