@@ -33,7 +33,7 @@ export default function TextArea({
                             numberOfLines={numberOfLines}
                             multiline={multiline}
                             onChangeText={(text) => form.setFieldValue(name, text)}
-                            value={String(field.value)}
+                            // value={String(field.value)}
                             {...attributes} />
                     </View>
                 )}

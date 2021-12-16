@@ -1,8 +1,7 @@
 import React, { useState, useContext, useCallback } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
-import { View, Text } from 'react-native'
 import FirstScreen from "./screens/FirstScreen"
 import Register from "./screens/Register"
 import HeaderTitle from "./components/HeaderTitle";
@@ -16,9 +15,10 @@ import PlusScreen from './screens/PlusScreen'
 import HistoryScreen  from './screens/HistoryScreen'
 import MoreScreen from './screens/MoreScreen'
 import FormalizeOrder from "./screens/FormalizeOrder"
+import OrderPay from "./screens/OrderPay"
 import {IconHistory, IconHome, IconMore, IconObservation, IconPlus} from "./components/Svgs";
-import {COLORS} from "./utils/colors";
-import StackHeader from "./components/StackHeader";
+import { COLORS } from "./utils/colors";
+import StackHeader from "./components/StackHeader"
 
 
 
@@ -93,6 +93,18 @@ export default function Navigation() {
                     <Stack.Screen
                         name={'FormalizeOrder'}
                         component={FormalizeOrder}
+                        options={{
+                            headerLeft: () => null,
+                            headerStyle: {
+                                height: 93,
+                                borderBottomWidth: 2,
+                            },
+                            headerTitle: () => <StackHeader/>,
+                    }}/>
+
+                    <Stack.Screen
+                        name={'OrderPay'}
+                        component={OrderPay}
                         options={{
                             headerLeft: () => null,
                             headerStyle: {

@@ -13,5 +13,6 @@ export const COLORS = {
     unSuccessText: '#EF2F2F',
     borderColor: 'rgba(125,125,125,0.2)',
     cardSelected: '#F3F3F3',
+    searchButtonBackground: '#E1E1E1',
 
 }
