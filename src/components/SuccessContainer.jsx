@@ -207,13 +207,11 @@ const styles = StyleSheet.create({
         color: COLORS.placeholderTextColor,
     },
     linkContainer: {
-        borderBottomWidth: 1,
-        borderColor: COLORS.main,
         fontSize: 14,
         lineHeight: 20,
         fontFamily: 'Helvetica',
         color: COLORS.placeholderTextColor,
-        width: 210,
         marginTop: -4,
+        textDecorationLine: 'underline',
     }
 })

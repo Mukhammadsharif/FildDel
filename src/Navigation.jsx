@@ -16,9 +16,16 @@ import HistoryScreen  from './screens/HistoryScreen'
 import MoreScreen from './screens/MoreScreen'
 import FormalizeOrder from "./screens/FormalizeOrder"
 import OrderPay from "./screens/OrderPay"
-import {IconHistory, IconHome, IconMore, IconObservation, IconPlus} from "./components/Svgs";
-import { COLORS } from "./utils/colors";
+import Politics from "./screens/Politics"
+import Agreement from "./screens/Agreement"
+import Offer from "./screens/Offer"
+import PayRules from "./screens/PayRules"
+import Profile from "./screens/Profile"
+import ProfileRegister from "./screens/ProfileRegister"
+import {IconHistory, IconHome, IconMore, IconObservation, IconPlus} from "./components/Svgs"
+import { COLORS } from "./utils/colors"
 import StackHeader from "./components/StackHeader"
+import ProfileHeaderTitle from "./components/ProfileHeaderTitle";
 
 
 
@@ -103,6 +110,54 @@ export default function Navigation() {
                     }}/>
 
                     <Stack.Screen
+                        name={'Politics'}
+                        component={Politics}
+                        options={{
+                            headerLeft: () => null,
+                            headerStyle: {
+                                height: 93,
+                                borderBottomWidth: 2,
+                            },
+                            headerTitle: () => <StackHeader/>,
+                    }}/>
+
+                    <Stack.Screen
+                        name={'Agreement'}
+                        component={Agreement}
+                        options={{
+                            headerLeft: () => null,
+                            headerStyle: {
+                                height: 93,
+                                borderBottomWidth: 2,
+                            },
+                            headerTitle: () => <StackHeader/>,
+                    }}/>
+
+                    <Stack.Screen
+                        name={'Offer'}
+                        component={Offer}
+                        options={{
+                            headerLeft: () => null,
+                            headerStyle: {
+                                height: 93,
+                                borderBottomWidth: 2,
+                            },
+                            headerTitle: () => <StackHeader/>,
+                    }}/>
+
+                    <Stack.Screen
+                        name={'PayRules'}
+                        component={PayRules}
+                        options={{
+                            headerLeft: () => null,
+                            headerStyle: {
+                                height: 93,
+                                borderBottomWidth: 2,
+                            },
+                            headerTitle: () => <StackHeader/>,
+                    }}/>
+
+                    <Stack.Screen
                         name={'OrderPay'}
                         component={OrderPay}
                         options={{
@@ -112,6 +167,30 @@ export default function Navigation() {
                                 borderBottomWidth: 2,
                             },
                             headerTitle: () => <StackHeader/>,
+                    }}/>
+
+                    <Stack.Screen
+                        name={'Profile'}
+                        component={Profile}
+                        options={{
+                            headerLeft: () => null,
+                            headerStyle: {
+                                height: 93,
+                                borderBottomWidth: 2,
+                            },
+                            headerTitle: () => <ProfileHeaderTitle/>,
+                    }}/>
+
+                    <Stack.Screen
+                        name={'ProfileRegister'}
+                        component={ProfileRegister}
+                        options={{
+                            headerLeft: () => null,
+                            headerStyle: {
+                                height: 93,
+                                borderBottomWidth: 2,
+                            },
+                            headerTitle: () => <ProfileHeaderTitle/>,
                     }}/>
             </Stack.Navigator>
         </NavigationContainer>

@@ -28,7 +28,7 @@ export default function OrderPay() {
 
 
                     <View style={styles.orderContainer}>
-                        <Text style={styles.orderTitleText}>Отправитель / Получатель</Text>
+                        <Text style={styles.orderTitleText}>Отправитель</Text>
 
                         <View style={{marginTop: 10}}>
                             <Text style={styles.orderContentText}>Фамилия Имя Отчечество</Text>
@@ -41,9 +41,9 @@ export default function OrderPay() {
                                     ул. Название улицы, д. 28
                                 </Text>
                             </Text>
-
-                            <Text style={[styles.orderContentSecondText, { marginTop: 10 }]}>/</Text>
                         </View>
+
+                        <Text style={[styles.orderTitleText, {marginBottom: -5}]}>/ Получатель</Text>
 
                         <View style={{marginTop: 10}}>
                             <Text style={styles.orderContentText}>Фамилия Имя Отчечество</Text>
@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
         height: 224,
         borderBottomWidth: 1,
         borderColor: COLORS.borderColor,
+        justifyContent: 'space-between',
     },
     orderContentText: {
         fontSize: 16,

@@ -26,6 +26,8 @@ export default function InputLight({
     wrapperStyle,
     button: Icon,
     buttonFunc = () => { },
+    textArea,
+    multiline,
     ...attributes
 }) {
     return (
@@ -46,6 +48,7 @@ export default function InputLight({
                         autoCapitalize={autoCapitalize}
                         editable={editable}
                         placeholderTextColor={placeholderTextColor}
+                        multiline={multiline}
                         {...attributes} />
                 )}
             </Field>

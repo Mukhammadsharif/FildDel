@@ -14,5 +14,6 @@ export const COLORS = {
     borderColor: 'rgba(125,125,125,0.2)',
     cardSelected: '#F3F3F3',
     searchButtonBackground: '#E1E1E1',
+    iconColor: '#F1F1F1',
 
 }

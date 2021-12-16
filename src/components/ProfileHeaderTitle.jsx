@@ -3,12 +3,12 @@ import { View, StyleSheet, TouchableOpacity} from 'react-native'
 import { TabHeaderLogo, TabHeaderProfile } from "./Svgs"
 import { useNavigation } from '@react-navigation/native'
 
-export default function TabHeaderTitle() {
+export default function ProfileHeaderTitle() {
     const navigation = useNavigation()
     return (
         <View style={styles.container}>
             <TabHeaderLogo/>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <TouchableOpacity onPress={() => navigation.navigate('ProfileRegister')}>
                 <TabHeaderProfile/>
             </TouchableOpacity>
         </View>
