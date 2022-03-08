@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native'
-import {COLORS} from "../utils/colors";
-import {Card} from "react-native-paper";
-import {Organization, User} from "../components/Svgs";
-import ProfileCreate from "../components/ProfileCreate";
-import OrganizationCreate from "../components/OrganizationCreate";
+import { Card } from 'react-native-paper'
+import { COLORS } from '../utils/colors'
+import { Organization, User } from '../components/Svgs'
+import ProfileCreate from '../components/ProfileCreate'
+import OrganizationCreate from '../components/OrganizationCreate'
 
 export default function Profile() {
     const [user, setUser] = useState(false)
@@ -16,11 +16,11 @@ export default function Profile() {
 
                 <View style={styles.cardsContainer}>
                     <TouchableOpacity
-                        style={{flex: 1, marginRight: 7.5}}
+                        style={{ flex: 1, marginRight: 7.5 }}
                         onPress={() => setUser(true)}>
                         <Card style={user ? styles.card : styles.cardDisabled}>
                             <View style={styles.iconContainer}>
-                                <User/>
+                                <User />
                             </View>
 
                             <Text style={user ? styles.text : styles.textDisabled}>Физ. лицо</Text>
@@ -28,11 +28,11 @@ export default function Profile() {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={{flex: 1, marginLeft: 7.5}}
+                        style={{ flex: 1, marginLeft: 7.5 }}
                         onPress={() => setUser(false)}>
                         <Card style={!user ? styles.card : styles.cardDisabled}>
                             <View style={styles.iconContainer}>
-                                <Organization/>
+                                <Organization />
                             </View>
 
                             <Text style={!user ? styles.text : styles.textDisabled}>Юр. лицо</Text>
@@ -40,7 +40,7 @@ export default function Profile() {
                     </TouchableOpacity>
                 </View>
 
-                { user ? <ProfileCreate/> : <OrganizationCreate/>}
+                { user ? <ProfileCreate /> : <OrganizationCreate />}
             </ScrollView>
         </SafeAreaView>
     )
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     cardDisabled: {
         height: 100,
         shadowColor: COLORS.shadowColor,
-        shadowOffset: {width: 5, height: 5},
+        shadowOffset: { width: 5, height: 5 },
         shadowOpacity: 0.8,
         shadowRadius: 5,
         borderColor: COLORS.shadowColor,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     card: {
         height: 100,
         shadowColor: COLORS.shadowColor,
-        shadowOffset: {width: 5, height: 5},
+        shadowOffset: { width: 5, height: 5 },
         shadowOpacity: 0.8,
         shadowRadius: 5,
         borderWidth: 1,
@@ -92,14 +92,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         paddingTop: 15,
-        borderColor: COLORS.main
+        borderColor: COLORS.main,
     },
     text: {
         textAlign: 'center',
         fontSize: 16,
         lineHeight: 22,
         fontFamily: 'Helvetica',
-        color: 'black'
+        color: 'black',
     },
     textDisabled: {
         textAlign: 'center',
@@ -115,6 +115,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 5,
         backgroundColor: COLORS.iconColor,
-        borderRadius: 25
-    }
+        borderRadius: 25,
+    },
 })

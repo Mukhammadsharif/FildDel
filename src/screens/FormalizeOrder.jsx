@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import {View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity} from "react-native"
-import {pixelSizeHorizontal} from "../utils/normalizeStyle";
-import {COLORS} from "../utils/colors";
-import {Formik} from "formik";
-import InputLight from "../components/InputLight";
-import Radio from "../components/Radio";
-import TextArea from "../components/TextArea";
-import SuccessSubmitButton from "../components/SuccessSubmitButton";
-import SubmitButton from "../components/SubmitButton"
+import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native'
+import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
+import { pixelSizeHorizontal } from '../utils/normalizeStyle'
+import { COLORS } from '../utils/colors'
+import InputLight from '../components/InputLight'
+import Radio from '../components/Radio'
+import TextArea from '../components/TextArea'
+import SuccessSubmitButton from '../components/SuccessSubmitButton'
+import SubmitButton from '../components/SubmitButton'
 
 export default function FormalizeOrder() {
     const navigation = useNavigation()
@@ -44,181 +44,172 @@ export default function FormalizeOrder() {
                                 <Text style={styles.inputLabel}>Фамилия*</Text>
 
                                 <InputLight
-                                    name={'senderSurname'}
-                                    type={'text'}
+                                    name="senderSurname"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Иванов'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
+                                    placeholder="Иванов"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>Имя*</Text>
 
                                 <InputLight
-                                    name={'senderName'}
-                                    type={'text'}
+                                    name="senderName"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Иван'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
-
+                                    placeholder="Иван"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>Отчество</Text>
 
                                 <InputLight
-                                    name={'senderFullname'}
-                                    type={'text'}
+                                    name="senderFullname"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Иванович'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
-
+                                    placeholder="Иванович"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>Телефон*</Text>
 
                                 <InputLight
-                                    name={'senderPhone'}
-                                    type={'text'}
+                                    name="senderPhone"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'+89876543210'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
+                                    placeholder="+89876543210"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>E-mail*</Text>
 
                                 <InputLight
-                                    name={'senderEmail'}
-                                    type={'email'}
+                                    name="senderEmail"
+                                    type="email"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Ivanov123@mail.ru'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
-
+                                    placeholder="Ivanov123@mail.ru"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>Название компании</Text>
 
                                 <InputLight
-                                    name={'senderCompany'}
-                                    type={'text'}
+                                    name="senderCompany"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Иванович'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
+                                    placeholder="Иванович"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
                             </View>
 
-
-                            <View style={{marginVertical: 80}}>
+                            <View style={{ marginVertical: 80 }}>
                                 <Text style={styles.text}>Данные получателья</Text>
 
                                 <Text style={styles.inputLabel}>Фамилия*</Text>
 
                                 <InputLight
-                                    name={'receiverSurname'}
-                                    type={'text'}
+                                    name="receiverSurname"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Иванов'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
+                                    placeholder="Иванов"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>Имя*</Text>
 
                                 <InputLight
-                                    name={'receiverName'}
-                                    type={'text'}
+                                    name="receiverName"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Иван'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
-
+                                    placeholder="Иван"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>Отчество</Text>
 
                                 <InputLight
-                                    name={'receiverFullname'}
-                                    type={'text'}
+                                    name="receiverFullname"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Иванович'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
-
+                                    placeholder="Иванович"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>Телефон*</Text>
 
                                 <InputLight
-                                    name={'receiverPhone'}
-                                    type={'text'}
+                                    name="receiverPhone"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'+89876543210'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
+                                    placeholder="+89876543210"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>E-mail*</Text>
 
                                 <InputLight
-                                    name={'receiverEmail'}
-                                    type={'email'}
+                                    name="receiverEmail"
+                                    type="email"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Ivanov123@mail.ru'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
-
+                                    placeholder="Ivanov123@mail.ru"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <Text style={styles.inputLabel}>Название компании</Text>
 
                                 <InputLight
-                                    name={'receiverCompany'}
-                                    type={'text'}
+                                    name="receiverCompany"
+                                    type="text"
                                     keyboard="default"
                                     input={styles.input}
-                                    placeholder={'Иванович'}
-                                    placeholderTextColor={COLORS.placeholderTextColor}/>
+                                    placeholder="Иванович"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
                             </View>
 
-
-                            <View style={{marginBottom: 80}}>
+                            <View style={{ marginBottom: 80 }}>
                                 <Text style={styles.text}>Оплата</Text>
 
-                                <View style={{flex: 1, flexDirection: 'row', marginTop: 25, marginBottom: 10}}>
-                                    <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={{ flex: 1, flexDirection: 'row', marginTop: 25, marginBottom: 10 }}>
+                                    <View style={{ flex: 1, flexDirection: 'row' }}>
                                         <Radio
                                             radio={paySender}
                                             setRadio={() => {
                                                 setPaySender(true)
                                                 setPayReceiver(false)
-                                            }}/>
+                                            }} />
                                         <Text style={styles.radioLabel}>Оплачивает отправитель</Text>
                                     </View>
 
-                                    <View style={{flex: 1, flexDirection: 'row'}}>
+                                    <View style={{ flex: 1, flexDirection: 'row' }}>
                                         <Radio
                                             radio={payReceiver}
                                             setRadio={() => {
-                                                    setPaySender(false)
-                                                    setPayReceiver(true)
-                                            }}/>
+                                                setPaySender(false)
+                                                setPayReceiver(true)
+                                            }} />
                                         <Text style={styles.radioLabel}>Оплачивает получатель</Text>
                                     </View>
                                 </View>
 
                                 <Text style={styles.inputLabel}>Комментарий</Text>
 
-                                <View style={{marginRight: 5}}>
+                                <View style={{ marginRight: 5 }}>
                                     <TextArea
-                                        name={'comments'}
-                                        type={'text'}
+                                        name="comments"
+                                        type="text"
                                         keyboard="default"
-                                        placeholder={'Введите текст'}
+                                        placeholder="Введите текст"
                                         placeholderTextColor={COLORS.placeholderTextColor}
-                                        multiline={true}
-                                        maxLength={500}/>
+                                        multiline
+                                        maxLength={500} />
                                 </View>
 
                                 <SuccessSubmitButton
-                                    text={'Оформить'}
-                                    submitFunction={() => navigation.navigate('OrderPay')}/>
+                                    text="Оформить"
+                                    submitFunction={() => navigation.navigate('OrderPay')} />
 
                                 <SubmitButton
-                                    text={'Сравнить цены'}/>
-
+                                    text="Сравнить цены" />
 
                                 <Text style={styles.warning}>
                                     Счет для оплаты придет на почту отправителя.
@@ -229,7 +220,7 @@ export default function FormalizeOrder() {
                                 </Text>
 
                                 <TouchableOpacity>
-                                    <Text style={[styles.linkContainer, { color: COLORS.main}]}>
+                                    <Text style={[styles.linkContainer, { color: COLORS.main }]}>
                                         с политикой конфиденциальности.
                                     </Text>
                                 </TouchableOpacity>
@@ -261,7 +252,7 @@ const styles = StyleSheet.create({
     inputLabel: {
         marginTop: 20,
         fontSize: 16,
-        fontFamily: 'Helvetica'
+        fontFamily: 'Helvetica',
     },
     input: {
         height: 50,
@@ -276,7 +267,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica',
         lineHeight: 22,
         marginLeft: 5,
-        paddingRight: 30
+        paddingRight: 30,
     },
     understanding: {
         paddingRight: 43,
@@ -300,6 +291,6 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontFamily: 'Helvetica',
         marginTop: 20,
-        color: 'black'
-    }
+        color: 'black',
+    },
 })

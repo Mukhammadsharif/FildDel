@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import {View, StyleSheet, ScrollView, Text, TouchableOpacity, SafeAreaView} from 'react-native'
-import {Card} from "react-native-paper";
-import {BigUser, Organization, User} from "../components/Svgs";
-import ProfileCreate from "../components/ProfileCreate";
-import OrganizationCreate from "../components/OrganizationCreate";
-import ProfileChange from "../components/ProfileChange";
-import OrganizationChange from "../components/OrganizationChange";
-import {COLORS} from "../utils/colors";
+import { View, StyleSheet, ScrollView, Text, TouchableOpacity, SafeAreaView } from 'react-native'
+import { Card } from 'react-native-paper'
+import { BigUser, Organization, User } from '../components/Svgs'
+import ProfileCreate from '../components/ProfileCreate'
+import OrganizationCreate from '../components/OrganizationCreate'
+import ProfileChange from '../components/ProfileChange'
+import OrganizationChange from '../components/OrganizationChange'
+import { COLORS } from '../utils/colors'
 
 export default function ProfileRegister({ route }) {
     const [user, setUser] = useState(false)
@@ -19,12 +19,12 @@ export default function ProfileRegister({ route }) {
                 <View style={styles.cardsContainer}>
                     {user ? (
                         <TouchableOpacity
-                            style={{flex: 1}}
+                            style={{ flex: 1 }}
                             onPress={() => setUser(!user)}>
                             <Card>
                                 <View style={styles.card}>
                                     <View style={styles.iconContainer}>
-                                        <BigUser/>
+                                        <BigUser />
                                     </View>
 
                                     <View style={styles.textContainer}>
@@ -34,14 +34,14 @@ export default function ProfileRegister({ route }) {
                                 </View>
                             </Card>
                         </TouchableOpacity>
-                    ): (
+                    ) : (
                         <TouchableOpacity
-                            style={{flex: 1}}
+                            style={{ flex: 1 }}
                             onPress={() => setUser(!user)}>
                             <Card>
                                 <View style={styles.card}>
                                     <View style={styles.iconContainer}>
-                                        <BigUser/>
+                                        <BigUser />
                                     </View>
 
                                     <View style={styles.textContainer}>
@@ -51,10 +51,10 @@ export default function ProfileRegister({ route }) {
                                 </View>
                             </Card>
                         </TouchableOpacity>
-                        )}
+                    )}
                 </View>
 
-                { user ? <ProfileChange/> : <OrganizationChange/>}
+                { user ? <ProfileChange /> : <OrganizationChange />}
             </ScrollView>
         </SafeAreaView>
     )
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     card: {
         height: 100,
         shadowColor: COLORS.shadowColor,
-        shadowOffset: {width: 5, height: 5},
+        shadowOffset: { width: 5, height: 5 },
         shadowOpacity: 0.8,
         shadowRadius: 5,
         borderWidth: 1,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 22,
         fontFamily: 'Helvetica',
-        color: 'black'
+        color: 'black',
     },
     textDisabled: {
         fontSize: 14,
@@ -108,5 +108,5 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         marginLeft: 16,
-    }
+    },
 })

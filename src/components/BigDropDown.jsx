@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, TouchableOpacity, View, Text, SafeAreaView, Tou
 import { COLORS } from "../utils/colors";
 import { Polygon } from "./Svgs";
 
-export default function DropDown({ placeholder, selectedValue, setSelectedValue, data }) {
+export default function BigDropDown({ placeholder, selectedValue, setSelectedValue, data }) {
     const [visible, setVisible] = useState(false)
     return (
         <View>
