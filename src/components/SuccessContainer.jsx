@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
-import { View , Text, StyleSheet, TouchableOpacity} from "react-native"
-import {
-    SuccessTitle,
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { SuccessTitle,
     SuccessDescription,
     TNT,
     PEK,
@@ -11,28 +11,25 @@ import {
     Dostavista,
     DPD,
     BuyButton,
-    TimeButton
-} from "./Svgs"
-import {COLORS} from "../utils/colors";
-import SubmitButton from "./SubmitButton";
-import RecommendationCard from "./RecommentdationCard";
-import { useNavigation } from '@react-navigation/native'
+    TimeButton } from './Svgs'
+import { COLORS } from '../utils/colors'
+import SubmitButton from './SubmitButton'
+import RecommendationCard from './RecommentdationCard'
 
-export default function SuccessContainer() {
+export default function SuccessContainer({ offers, selectedOffer, setSelectedOffer }) {
     const navigation = useNavigation()
-    const [selected, setSelected] = useState(false)
 
     return (
         <View style={styles.container}>
-            <SuccessTitle style={{marginLeft: 15}}/>
+            <SuccessTitle style={{ marginLeft: 15 }} />
 
-            <SuccessDescription style={{marginTop: 20, marginBottom: 11, marginLeft: 15}}/>
+            <SuccessDescription style={{ marginTop: 20, marginBottom: 11, marginLeft: 15 }} />
 
             <TouchableOpacity
                 style={styles.card}>
                 <Text style={styles.titleLeftText}>Компания</Text>
 
-                <View style={styles.titleLeftText}/>
+                <View style={styles.titleLeftText} />
 
                 <View style={styles.titleRightText}>
                     <Text style={styles.rightText}>Сроки, дни</Text>
@@ -41,96 +38,39 @@ export default function SuccessContainer() {
 
             </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.card}>
-                <TNT width={115} height={22.59} style={{flex: 1}}/>
+            { offers ? offers.map((item) => (
+                <TouchableOpacity
+                    style={item.offer_id === selectedOffer.offer_id ? styles.cardSelected : styles.card}
+                    onPress={() => {
+                        setSelectedOffer({})
+                        setSelectedOffer(item)
+                    }}>
+                    <TNT width={115} height={22.59} style={{ flex: 1 }} />
 
-                <View style={styles.descriptionContainer}/>
+                    <View style={styles.descriptionContainer} />
 
-                <Text style={styles.description}>от 2 до 4 дней, 1 228 ₽ </Text>
+                    <Text style={styles.description}>
+                        {/* eslint-disable-next-line max-len */}
+                        {item.term.includes('менеджер') ? 'Уточняйте у менеджера' : `${item.term} дней`},      {item.price} ₽
+                    </Text>
 
-            </TouchableOpacity>
+                </TouchableOpacity>
+            )) : null}
 
-            <TouchableOpacity
-                style={styles.card}>
-                <PEK width={115} height={28.03} style={{flex: 1}}/>
-
-                <View style={styles.descriptionContainer}>
-                    <BuyButton/>
-                </View>
-
-                <Text style={styles.description}>от 1 до 5 дней, 128 ₽ </Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={!selected ? styles.card : styles.cardSelected}
-                onPress={() => setSelected(!selected)}>
-                <LinesIcon width={115} height={36.64} style={{flex: 1}}/>
-
-                <View style={styles.descriptionContainer}>
-                    <BuyButton style={{marginBottom: 5}}/>
-                    <TimeButton/>
-                </View>
-
-                <Text style={styles.description}>от 1 до 2 дней, 128 ₽  </Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.card}>
-                <KTC width={115} height={30.44} style={{flex: 1}}/>
-
-                <View style={styles.descriptionContainer}/>
-
-                <Text style={styles.description}>от 2 до 4 дней, 111 228 ₽ </Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.card}>
-                <Baikal width={115} height={17.87} style={{flex: 1}}/>
-
-                <View style={styles.descriptionContainer}/>
-
-                <Text style={styles.description}>от 2 до 4 дней, 1 228 ₽ </Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.card}>
-                <Dostavista width={123} height={18} style={{flex: 1}}/>
-
-                <View style={styles.descriptionContainer}/>
-
-                <Text style={styles.description}>от 2 до 4 дней, 1 228 ₽ </Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.card}>
-                <DPD width={115} height={50.88} style={{flex: 1}}/>
-
-                <View style={styles.descriptionContainer}/>
-
-                <Text style={styles.description}>от 2 до 4 дней, 128 ₽ </Text>
-
-            </TouchableOpacity>
-
-            <View style={{paddingHorizontal: 15}}>
+            <View style={{ paddingHorizontal: 15 }}>
                 <SubmitButton
-                    text={'Оформить доставку'}
-                    submitFunction={() => navigation.navigate('FormalizeOrder')}/>
+                    text="Оформить доставку"
+                    submitFunction={() => navigation.navigate('FormalizeOrder', { offerId: selectedOffer.offer_id })} />
 
-                <Text style={[styles.understanding, { marginTop: 20}]}>
+                <Text style={[styles.understanding, { marginTop: 20 }]}>
                     Нажимая на кнопку, вы соглашаетесь
                 </Text>
 
-                    <TouchableOpacity>
-                        <Text style={[styles.linkContainer, { color: COLORS.main}]}>
-                            с политикой конфиденциальности.
-                        </Text>
-                    </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.linkContainer, { color: COLORS.main }]}>
+                        с политикой конфиденциальности.
+                    </Text>
+                </TouchableOpacity>
 
                 <Text style={[styles.understanding]}>
                     Стоимость доставки может измениться
@@ -139,7 +79,7 @@ export default function SuccessContainer() {
                     личном кабинете и сообщением на эл.почту
                 </Text>
 
-                <RecommendationCard/>
+                <RecommendationCard />
             </View>
         </View>
     )
@@ -179,16 +119,16 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         lineHeight: 22,
-        fontFamily: 'Helvetica'
+        fontFamily: 'Helvetica',
     },
     rightText: {
         fontSize: 16,
         lineHeight: 22,
-        fontFamily: 'Helvetica'
+        fontFamily: 'Helvetica',
     },
     descriptionContainer: {
-         flex: 1.35,
-         alignItems: 'center',
+        flex: 1.35,
+        alignItems: 'center',
     },
     description: {
         fontSize: 16,
@@ -197,7 +137,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingRight: 24,
         color: COLORS.placeholderTextColor,
-        paddingLeft: 15
+        paddingLeft: 15,
     },
     understanding: {
         paddingRight: 80,
@@ -213,5 +153,5 @@ const styles = StyleSheet.create({
         color: COLORS.placeholderTextColor,
         marginTop: -4,
         textDecorationLine: 'underline',
-    }
+    },
 })

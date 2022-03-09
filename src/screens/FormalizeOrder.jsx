@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, Alert } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import { pixelSizeHorizontal } from '../utils/normalizeStyle'
@@ -9,11 +9,61 @@ import Radio from '../components/Radio'
 import TextArea from '../components/TextArea'
 import SuccessSubmitButton from '../components/SuccessSubmitButton'
 import SubmitButton from '../components/SubmitButton'
+import { GlobalContext } from '../contexts/GlobalContext'
 
-export default function FormalizeOrder() {
+export default function FormalizeOrder({ route }) {
     const navigation = useNavigation()
     const [paySender, setPaySender] = useState(false)
     const [payReceiver, setPayReceiver] = useState(true)
+    const [senderSurname, setSenderSurname] = useState('')
+    const [senderName, setSenderName] = useState('')
+    const [senderPatronymic, setSenderPatronymic] = useState('')
+    const [senderPhone, setSenderPhone] = useState('')
+    const [senderEmail, setSenderEmail] = useState('')
+    const [senderCompany, setSenderCompany] = useState('')
+    const [recSurname, setRecSurname] = useState('')
+    const [recName, setRecName] = useState('')
+    const [recPatronymic, setRecPatronymic] = useState('')
+    const [recPhone, setRecPhone] = useState('')
+    const [recEmail, setRecEmail] = useState('')
+    const [recCompany, setRecCompany] = useState('')
+    const [comment, setComment] = useState('')
+    const { offerId } = route.params
+    const { doctorId } = useContext(GlobalContext)
+
+    const orderOffer = async () => {
+        const formData = new FormData()
+        formData.append('clientId', doctorId)
+        formData.append('offer_id', offerId)
+        formData.append('sender_surname', senderSurname)
+        formData.append('sender_name', senderName)
+        formData.append('sender_patronymic', senderPatronymic)
+        formData.append('sender_phone', senderPhone)
+        formData.append('sender_email', senderEmail)
+        formData.append('sender_company_name', senderCompany)
+        formData.append('rec_surname', recSurname)
+        formData.append('rec_name', recName)
+        formData.append('rec_patronymic', recPatronymic)
+        formData.append('rec_phone', recPhone)
+        formData.append('rec_email', recEmail)
+        formData.append('rec_company_name', recCompany)
+        formData.append('who_pay', paySender ? 'отправитель' : 'получатель')
+        formData.append('comment', comment)
+        await fetch('https://finddel.ru/api/place_order', {
+            method: 'POST',
+            headers: {
+                ApiKey: 'Kv73gXP39dNSU39CBnd77Dmw',
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((s) => {
+                console.log(s)
+            })
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -49,7 +99,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Иванов"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={senderSurname}
+                                    onChange={setSenderSurname} />
 
                                 <Text style={styles.inputLabel}>Имя*</Text>
 
@@ -59,7 +111,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Иван"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={senderName}
+                                    onChange={setSenderName} />
 
                                 <Text style={styles.inputLabel}>Отчество</Text>
 
@@ -69,7 +123,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Иванович"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={senderPatronymic}
+                                    onChange={setSenderPatronymic} />
 
                                 <Text style={styles.inputLabel}>Телефон*</Text>
 
@@ -79,7 +135,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="+89876543210"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={senderPhone}
+                                    onChange={setSenderPhone} />
 
                                 <Text style={styles.inputLabel}>E-mail*</Text>
 
@@ -89,7 +147,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Ivanov123@mail.ru"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={senderEmail}
+                                    onChange={setSenderEmail} />
 
                                 <Text style={styles.inputLabel}>Название компании</Text>
 
@@ -99,7 +159,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Иванович"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={senderCompany}
+                                    onChange={setSenderCompany} />
                             </View>
 
                             <View style={{ marginVertical: 80 }}>
@@ -113,7 +175,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Иванов"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={recSurname}
+                                    onChange={setRecSurname} />
 
                                 <Text style={styles.inputLabel}>Имя*</Text>
 
@@ -123,7 +187,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Иван"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={recName}
+                                    onChange={setRecName} />
 
                                 <Text style={styles.inputLabel}>Отчество</Text>
 
@@ -133,7 +199,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Иванович"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={recPatronymic}
+                                    onChange={setRecPatronymic} />
 
                                 <Text style={styles.inputLabel}>Телефон*</Text>
 
@@ -143,7 +211,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="+89876543210"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={recPhone}
+                                    onChange={setRecPhone} />
 
                                 <Text style={styles.inputLabel}>E-mail*</Text>
 
@@ -153,7 +223,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Ivanov123@mail.ru"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={recEmail}
+                                    onChange={setRecEmail} />
 
                                 <Text style={styles.inputLabel}>Название компании</Text>
 
@@ -163,7 +235,9 @@ export default function FormalizeOrder() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="Иванович"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={recCompany}
+                                    onChange={setRecCompany} />
                             </View>
 
                             <View style={{ marginBottom: 80 }}>
@@ -201,12 +275,17 @@ export default function FormalizeOrder() {
                                         placeholder="Введите текст"
                                         placeholderTextColor={COLORS.placeholderTextColor}
                                         multiline
-                                        maxLength={500} />
+                                        maxLength={500}
+                                        value={comment}
+                                        onChange={setComment} />
                                 </View>
 
                                 <SuccessSubmitButton
                                     text="Оформить"
-                                    submitFunction={() => navigation.navigate('OrderPay')} />
+                                    submitFunction={() => {
+                                        orderOffer()
+                                        // navigation.navigate('OrderPay')
+                                    }} />
 
                                 <SubmitButton
                                     text="Сравнить цены" />

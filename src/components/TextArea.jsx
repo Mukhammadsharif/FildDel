@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, TextInput, Text, Dimensions } from 'react-native'
 import { Field } from 'formik'
-import {COLORS} from "../utils/colors";
-
+import { COLORS } from '../utils/colors'
 
 export default function TextArea({
     label,
@@ -16,6 +15,7 @@ export default function TextArea({
     multiline,
     maxLength,
     attributes,
+    onChange,
 }) {
     return (
         <View>
@@ -32,8 +32,11 @@ export default function TextArea({
                             placeholderTextColor={placeholderTextColor}
                             numberOfLines={numberOfLines}
                             multiline={multiline}
-                            onChangeText={(text) => form.setFieldValue(name, text)}
-                            // value={String(field.value)}
+                            onChangeText={(value) => {
+                                form.setFieldValue(name, value)
+                                if (typeof onChange === 'function') onChange(value)
+                            }}
+                            value={String(field.value || '') || ''}
                             {...attributes} />
                     </View>
                 )}

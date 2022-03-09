@@ -1,14 +1,14 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView, ScrollView, Text } from "react-native"
+import { View, StyleSheet, SafeAreaView, ScrollView, Text } from 'react-native'
 import { Card } from 'react-native-paper'
-import {pixelSizeHorizontal, pixelSizeVertical} from "../utils/normalizeStyle";
-import MainScreenBanner from "../components/MainScreenBanner";
-import {COLORS} from "../utils/colors";
-import {Formik} from "formik";
-import InputLight from "../components/InputLight";
-import {CombinedIcon} from "../components/Svgs";
-import SubmitButton from "../components/SubmitButton";
-import Logos from "../components/Logos";
+import { Formik } from 'formik'
+import { pixelSizeHorizontal, pixelSizeVertical } from '../utils/normalizeStyle'
+import MainScreenBanner from '../components/MainScreenBanner'
+import { COLORS } from '../utils/colors'
+import InputLight from '../components/InputLight'
+import { CombinedIcon } from '../components/Svgs'
+import SubmitButton from '../components/SubmitButton'
+import Logos from '../components/Logos'
 
 export default function ObservationScreen() {
     return (
@@ -19,26 +19,26 @@ export default function ObservationScreen() {
                 <Card style={styles.cardContainer}>
                     <Text style={styles.cardNumber}>Введите номер заказа</Text>
 
-                    <Formik initialValues={{number: ''}} onSubmit={() => {}}>
+                    <Formik initialValues={{ number: '' }} onSubmit={() => {}}>
                         {({ handleSubmit }) => (
                             <View>
                                 <InputLight
-                                         name={'receive'}
-                                         type={'text'}
-                                         keyboard="default"
-                                         input={styles.input}
-                                         placeholder={'1234567890'}
-                                         placeholderTextColor={COLORS.placeholderTextColor}/>
+                                    name="receive"
+                                    type="text"
+                                    keyboard="default"
+                                    input={styles.input}
+                                    placeholder="1234567890"
+                                    placeholderTextColor={COLORS.placeholderTextColor} />
 
                                 <SubmitButton
-                                    text={'Сравнить цены'}
-                                    icon={<CombinedIcon style={{marginLeft: 10}}/>}/>
+                                    text="Сравнить цены"
+                                    icon={<CombinedIcon style={{ marginLeft: 10 }} />} />
                             </View>
                         )}
-                     </Formik>
+                    </Formik>
                 </Card>
 
-                <Logos/>
+                <Logos />
 
                 <Text style={styles.description}>Еще 1348 транспортных компаний</Text>
             </ScrollView>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         height: 199,
         width: '100%',
         shadowColor: COLORS.shadowColor,
-        shadowOffset: {width: 5, height: 5},
+        shadowOffset: { width: 5, height: 5 },
         shadowOpacity: 0.8,
         shadowRadius: 5,
         borderColor: COLORS.shadowColor,
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: COLORS.main,
         paddingTop: 30,
-        paddingBottom: 50
-    }
+        paddingBottom: 50,
+    },
 })

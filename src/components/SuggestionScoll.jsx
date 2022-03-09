@@ -1,18 +1,10 @@
 import React, { useState } from 'react'
 import { StyleSheet, ScrollView, TouchableOpacity, View, Text, TouchableWithoutFeedback } from 'react-native'
 import { COLORS } from '../utils/colors'
-import { Polygon } from './Svgs'
 
-export default function BigDropDown({ placeholder, selectedValue, setSelectedValue, data }) {
-    const [visible, setVisible] = useState(false)
+export default function SuggestionScroll({ selectedValue, setSelectedValue, data, visible, setVisible }) {
     return (
         <View>
-            <TouchableOpacity style={styles.container} onPress={() => setVisible(!visible)}>
-                <Text style={styles.placeholder}>{ selectedValue === '' ? placeholder : selectedValue }</Text>
-
-                <Polygon style={styles.polygon} />
-            </TouchableOpacity>
-
             { visible ? (
                 <TouchableWithoutFeedback>
                     <ScrollView
@@ -22,19 +14,13 @@ export default function BigDropDown({ placeholder, selectedValue, setSelectedVal
                         {data ? data.map((item) => (
                             <TouchableOpacity
                                 onPress={() => {
-                                    setSelectedValue(item.name)
+                                    setSelectedValue(item.value)
                                     setVisible(!visible)
                                 }}
                                 style={styles.dropDownItem}>
                                 <View style={{ flex: 1, flexDirection: 'row' }}>
-                                    <View style={{ flex: 1, flexDirection: 'row' }}>
-                                        {item.icon}
-                                        <Text style={styles.dropText}>{item.name}</Text>
-                                    </View>
-                                    <Text style={styles.placeholder}>{item.size}</Text>
+                                    <Text style={styles.dropText}>{item.value}</Text>
                                 </View>
-
-                                <Text style={styles.placeholder}>{item.description}</Text>
                             </TouchableOpacity>
                         )) : null}
                     </ScrollView>
@@ -58,7 +44,7 @@ const styles = StyleSheet.create({
     },
     scroll: {
         position: 'absolute',
-        top: 50,
+        top: 0,
         left: 0,
         right: 0,
         height: 100,
@@ -83,9 +69,9 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     dropDownItem: {
-        height: 120,
-        paddingTop: 25,
-        paddingBottom: 40,
+        height: 30,
+        paddingTop: 2,
+        paddingBottom: 2,
     },
     itemText: {
         color: COLORS.placeholderTextColor,

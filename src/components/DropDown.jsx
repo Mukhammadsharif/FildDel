@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { StyleSheet, ScrollView, TouchableOpacity, View, Text, SafeAreaView, TouchableWithoutFeedback } from "react-native";
-import { COLORS } from "../utils/colors";
-import { Polygon } from "./Svgs";
+import { StyleSheet, ScrollView, TouchableOpacity, View, Text, TouchableWithoutFeedback } from 'react-native'
+import { COLORS } from '../utils/colors'
+import { Polygon } from './Svgs'
 
 export default function DropDown({ placeholder, selectedValue, setSelectedValue, data }) {
     const [visible, setVisible] = useState(false)
@@ -10,22 +10,25 @@ export default function DropDown({ placeholder, selectedValue, setSelectedValue,
             <TouchableOpacity style={styles.container} onPress={() => setVisible(!visible)}>
                 <Text style={styles.placeholder}>{ selectedValue === '' ? placeholder : selectedValue }</Text>
 
-                <Polygon style={styles.polygon}/>
+                <Polygon style={styles.polygon} />
             </TouchableOpacity>
 
             { visible ? (
                 <TouchableWithoutFeedback>
                     <ScrollView
                         style={styles.scroll}
-                        showsVerticalScrollIndicator={true}
-                        nestedScrollEnabled={true}>
-                            {data ? data.map((item) => (
-                                <TouchableOpacity
-                                    onPress={() => setSelectedValue(item)}
-                                    style={styles.dropDownItem}>
-                                    <Text key={item} style={styles.itemText}>{ item }</Text>
-                                </TouchableOpacity>
-                            )) : null}
+                        showsVerticalScrollIndicator
+                        nestedScrollEnabled>
+                        {data ? data.map((item) => (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setSelectedValue(item)
+                                    setVisible(!visible)
+                                }}
+                                style={styles.dropDownItem}>
+                                <Text key={item} style={styles.itemText}>{ item }</Text>
+                            </TouchableOpacity>
+                        )) : null}
                     </ScrollView>
                 </TouchableWithoutFeedback>
             ) : null }
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.inputBackgroundColor,
         borderRadius: 0,
         paddingHorizontal: 15,
-        paddingTop: 13
+        paddingTop: 13,
     },
     scroll: {
         position: 'absolute',
@@ -66,9 +69,9 @@ const styles = StyleSheet.create({
         color: COLORS.placeholderTextColor,
     },
     dropDownItem: {
-        height: 40
+        height: 40,
     },
     itemText: {
         color: COLORS.placeholderTextColor,
-    }
+    },
 })
