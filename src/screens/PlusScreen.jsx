@@ -17,7 +17,7 @@ import SuggestionScroll from '../components/SuggestionScoll'
 import { cargoData } from '../utils/data'
 import { GlobalContext } from '../contexts/GlobalContext'
 
-export default function PlusScreen({ route }) {
+export default function PlusScreen() {
     const [toggle, setToggle] = useState(false)
     const [firstRadio, setFirstRadio] = useState(true)
     const [secondRadio, setSecondRadio] = useState(false)
@@ -40,8 +40,7 @@ export default function PlusScreen({ route }) {
     const [suggestions, setSuggestions] = useState('')
     const [toSuggestions, setToSuggestions] = useState('')
     const [selectedOffer, setSelectedOffer] = useState({})
-    const { doctorId } = useContext(GlobalContext)
-    const { fromAddress, toAddress } = route.params
+    const { doctorId, fromAddress, toAddress } = useContext(GlobalContext)
 
     const data = [
         { name: 'Конверт',

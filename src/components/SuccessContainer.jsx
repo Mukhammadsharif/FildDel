@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { SuccessTitle,
@@ -15,9 +15,11 @@ import { SuccessTitle,
 import { COLORS } from '../utils/colors'
 import SubmitButton from './SubmitButton'
 import RecommendationCard from './RecommentdationCard'
+import { GlobalContext } from '../contexts/GlobalContext'
 
 export default function SuccessContainer({ offers, selectedOffer, setSelectedOffer }) {
     const navigation = useNavigation()
+    const { setPrice } = useContext(GlobalContext)
 
     return (
         <View style={styles.container}>
@@ -44,6 +46,7 @@ export default function SuccessContainer({ offers, selectedOffer, setSelectedOff
                     onPress={() => {
                         setSelectedOffer({})
                         setSelectedOffer(item)
+                        setPrice(item.price)
                     }}>
                     <TNT width={115} height={22.59} style={{ flex: 1 }} />
 
@@ -60,7 +63,9 @@ export default function SuccessContainer({ offers, selectedOffer, setSelectedOff
             <View style={{ paddingHorizontal: 15 }}>
                 <SubmitButton
                     text="Оформить доставку"
-                    submitFunction={() => navigation.navigate('FormalizeOrder', { offerId: selectedOffer.offer_id })} />
+                    submitFunction={() => {
+                        navigation.navigate('FormalizeOrder', { offerId: selectedOffer.offer_id })
+                    }} />
 
                 <Text style={[styles.understanding, { marginTop: 20 }]}>
                     Нажимая на кнопку, вы соглашаетесь

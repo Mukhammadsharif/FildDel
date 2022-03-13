@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import { Card } from 'react-native-paper'
 import { Formik } from 'formik'
@@ -21,16 +21,16 @@ import SubmitButton from '../components/SubmitButton'
 import Logos from '../components/Logos'
 import BigDropDown from '../components/BigDropDown'
 import SuggestionScroll from '../components/SuggestionScoll'
+import { GlobalContext } from '../contexts/GlobalContext'
 
 export default function MainScreen() {
     const [selectedValue, setSelectedValue] = useState('')
-    const [fromAddress, setFromAddress] = useState('')
-    const [toAddress, setToAddress] = useState('')
     const [suggestions, setSuggestions] = useState('')
     const [toSuggestions, setToSuggestions] = useState('')
     const [fromSug, setFromSug] = useState(false)
     const [toSug, setToSug] = useState(false)
     const navigation = useNavigation()
+    const { fromAddress, setFromAddress, toAddress, setToAddress } = useContext(GlobalContext)
     const data = [
         { name: 'Конверт',
             size: '35x25x5 см / до 2 кг',
@@ -213,10 +213,7 @@ export default function MainScreen() {
                                     text="Сравнить цены"
                                     icon={<CombinedIcon style={{ marginLeft: 10 }} />}
                                     submitFunction={() => {
-                                        navigation.navigate('PlusScreen', {
-                                            fromAddress,
-                                            toAddress,
-                                        })
+                                        navigation.navigate('PlusScreen')
                                     }} />
                             </View>
                         )}

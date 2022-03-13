@@ -1,10 +1,10 @@
-import React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
 export default function ChanceCard({ icon, title, text }) {
     return (
         <View style={styles.container}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 { icon }
                 <Text style={styles.title}>{ title }</Text>
             </View>
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flex: 1,
     },
-    title:{
+    title: {
         fontSize: 26,
         lineHeight: 32,
         fontWeight: 'bold',
@@ -33,5 +33,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica',
         paddingRight: 30,
         marginTop: 20,
-    }
+    },
 })

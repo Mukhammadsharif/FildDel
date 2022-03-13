@@ -15,6 +15,10 @@ export function GlobalProvider({ children }) {
     const [proAccount, setProAccount] = useState(false)
     const [clinicModal, setClinicModal] = useState(false)
     const [createAccount, setCreateAccount] = useState(false)
+    const [fromAddress, setFromAddress] = useState('')
+    const [toAddress, setToAddress] = useState('')
+    const [orderId, setOrderId] = useState('')
+    const [price, setPrice] = useState('')
 
     useEffect(() => {
         AsyncStorage.getItem('id').then(async (value) => {
@@ -76,6 +80,14 @@ export function GlobalProvider({ children }) {
             setClinicModal,
             createAccount,
             setCreateAccount,
+            fromAddress,
+            setFromAddress,
+            toAddress,
+            setToAddress,
+            orderId,
+            setOrderId,
+            price,
+            setPrice,
         }}>
             {isLoaded ? children : null}
         </GlobalContext.Provider>

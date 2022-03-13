@@ -29,7 +29,7 @@ export default function FormalizeOrder({ route }) {
     const [recCompany, setRecCompany] = useState('')
     const [comment, setComment] = useState('')
     const { offerId } = route.params
-    const { doctorId } = useContext(GlobalContext)
+    const { doctorId, setOrderId } = useContext(GlobalContext)
 
     const orderOffer = async () => {
         const formData = new FormData()
@@ -58,7 +58,11 @@ export default function FormalizeOrder({ route }) {
         })
             .then((response) => response.json())
             .then((s) => {
-                console.log(s)
+                if (s.orderId) {
+                    setOrderId(s.orderId)
+                } else {
+                    Alert.alert(s.text)
+                }
             })
             .catch((error) => {
                 console.error('Error:', error)
@@ -284,11 +288,12 @@ export default function FormalizeOrder({ route }) {
                                     text="Оформить"
                                     submitFunction={() => {
                                         orderOffer()
-                                        // navigation.navigate('OrderPay')
+                                        navigation.navigate('OrderPay')
                                     }} />
 
                                 <SubmitButton
-                                    text="Сравнить цены" />
+                                    text="Сравнить цены"
+                                    submitFunction={() => navigation.goBack()} />
 
                                 <Text style={styles.warning}>
                                     Счет для оплаты придет на почту отправителя.
