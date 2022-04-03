@@ -19,6 +19,7 @@ export function GlobalProvider({ children }) {
     const [toAddress, setToAddress] = useState('')
     const [orderId, setOrderId] = useState('')
     const [price, setPrice] = useState('')
+    const [type, setType] = useState('')
 
     useEffect(() => {
         AsyncStorage.getItem('id').then(async (value) => {
@@ -88,6 +89,8 @@ export function GlobalProvider({ children }) {
             setOrderId,
             price,
             setPrice,
+            type,
+            setType,
         }}>
             {isLoaded ? children : null}
         </GlobalContext.Provider>

@@ -30,7 +30,7 @@ export default function MainScreen() {
     const [fromSug, setFromSug] = useState(false)
     const [toSug, setToSug] = useState(false)
     const navigation = useNavigation()
-    const { fromAddress, setFromAddress, toAddress, setToAddress } = useContext(GlobalContext)
+    const { fromAddress, setFromAddress, toAddress, setToAddress, type, setType } = useContext(GlobalContext)
     const data = [
         { name: 'Конверт',
             size: '35x25x5 см / до 2 кг',
@@ -137,6 +137,10 @@ export default function MainScreen() {
             setToSug(!toSug)
         }
     }, [toAddress])
+
+    useEffect(() => {
+        setType(selectedValue)
+    }, [selectedValue])
 
     return (
         <SafeAreaView style={styles.container}>

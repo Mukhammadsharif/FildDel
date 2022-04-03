@@ -1,94 +1,90 @@
-import * as React from 'react';
-import { Modal, TouchableOpacity, StyleSheet, View, Pressable, Text } from "react-native"
+import * as React from 'react'
+import { Modal, TouchableOpacity, StyleSheet, View, Pressable, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Card } from "react-native-paper";
-import { Close } from "./Svgs";
-import { COLORS } from "../utils/colors";
-import {Formik} from "formik";
-import InputLight from "./InputLight";
-import SubmitButton from "./SubmitButton";
+import { Card } from 'react-native-paper'
+import { Formik } from 'formik'
+import { Close } from './Svgs'
+import { COLORS } from '../utils/colors'
+import InputLight from './InputLight'
+import SubmitButton from './SubmitButton'
 
-
-export default function RecomModal ({ modalVisible, setModalVisible })  {
-
+export default function RecomModal({ modalVisible, setModalVisible }) {
     const navigation = useNavigation()
-      return (
-          <Modal
-              onShow={() => setModalVisible(true)}
-              onRequestClose={() => setModalVisible(false)}
-              visible={modalVisible}
-              animationType={'fade'}
-              hardwareAccelerated={true}
-              transparent={true}
-              statusBarTranslucent>
-              <TouchableOpacity style={styles.modalContainer}>
-                  <Card>
-                      <View style={styles.modalContent}>
-                          <Pressable style={styles.icon} onPress={() => setModalVisible(false)}>
-                              <Close/>
-                          </Pressable>
+    return (
+        <Modal
+            onShow={() => setModalVisible(true)}
+            onRequestClose={() => setModalVisible(false)}
+            visible={modalVisible}
+            animationType="fade"
+            hardwareAccelerated
+            transparent
+            statusBarTranslucent>
+            <TouchableOpacity style={styles.modalContainer}>
+                <Card>
+                    <View style={styles.modalContent}>
+                        <Pressable style={styles.icon} onPress={() => setModalVisible(false)}>
+                            <Close />
+                        </Pressable>
 
-                          <Text style={styles.title}>Обратная связь</Text>
+                        <Text style={styles.title}>Обратная связь</Text>
 
-                          <Text style={styles.subTitle}>
-                              Оставьте заявку, наши специалисты
-                              свяжутся с вами и учтут пожелания
-                          </Text>
+                        <Text style={styles.subTitle}>
+                            Оставьте заявку, наши специалисты
+                            свяжутся с вами и учтут пожелания
+                        </Text>
 
-                          <Formik
-                             initialValues={{name: '', phone: '', comments: ''}} onSubmit={() => {}}>
+                        <Formik
+                            initialValues={{ name: '', phone: '', comments: '' }} onSubmit={() => {}}>
                             {({ handleSubmit }) => (
                                 <View>
                                     <InputLight
-                                        name={'size'}
-                                        type={'text'}
+                                        name="size"
+                                        type="text"
                                         keyboard="default"
                                         input={styles.input}
-                                        placeholder={'Введите имя'}
-                                        placeholderTextColor={COLORS.placeholderTextColor}/>
+                                        placeholder="Введите имя"
+                                        placeholderTextColor={COLORS.placeholderTextColor} />
 
                                     <InputLight
-                                        name={'phone'}
-                                        type={'text'}
+                                        name="phone"
+                                        type="text"
                                         keyboard="default"
                                         input={styles.input}
-                                        placeholder={'Введите телефон'}
-                                        placeholderTextColor={COLORS.placeholderTextColor}/>
+                                        placeholder="Введите телефон"
+                                        placeholderTextColor={COLORS.placeholderTextColor} />
 
                                     <InputLight
-                                        name={'comments'}
-                                        type={'text'}
+                                        name="comments"
+                                        type="text"
                                         keyboard="default"
                                         input={styles.textArea}
-                                        placeholder={'Введите телефон'}
+                                        placeholder="Введите телефон"
                                         placeholderTextColor={COLORS.placeholderTextColor}
-                                        multiline={true}/>
-
+                                        multiline />
 
                                     <SubmitButton
-                                        text={'Отправить'}/>
+                                        text="Отправить" />
                                 </View>
                             )}
-                          </Formik>
+                        </Formik>
 
-                          <Text style={styles.footerText}>
-                              Нажимая на кнопку, вы соглашаетесь
+                        <Text style={styles.footerText}>
+                            Нажимая на кнопку, вы соглашаетесь
 
-                              <TouchableOpacity onPress={() => {
-                                  setModalVisible(false)
-                                  navigation.navigate('Politics')
-                              }}>
-                                  <Text style={{color: COLORS.main, textDecorationLine: 'underline'}}>
-                                      с политикой конфиденциальности
-                                  </Text>
-                              </TouchableOpacity>
-                          </Text>
-                      </View>
-                  </Card>
-              </TouchableOpacity>
-          </Modal>
-      )
-
+                            <TouchableOpacity onPress={() => {
+                                setModalVisible(false)
+                                navigation.navigate('Politics')
+                            }}>
+                                <Text style={{ color: COLORS.main, textDecorationLine: 'underline' }}>
+                                    с политикой конфиденциальности
+                                </Text>
+                            </TouchableOpacity>
+                        </Text>
+                    </View>
+                </Card>
+            </TouchableOpacity>
+        </Modal>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -109,7 +105,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         paddingRight: 15,
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
     },
     title: {
         fontSize: 26,
@@ -158,5 +154,5 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'Helvetica',
         lineHeight: 19,
-    }
+    },
 })

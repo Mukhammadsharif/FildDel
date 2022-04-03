@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import React, { useContext, useState, useEffect } from 'react'
+import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import { COLORS } from '../utils/colors'
@@ -7,9 +7,45 @@ import InputLight from './InputLight'
 import SuccessSubmitButton from './SuccessSubmitButton'
 import { GlobalContext } from '../contexts/GlobalContext'
 
-export default function OrganizationChange() {
-    const { signOut } = useContext(GlobalContext)
+export default function OrganizationChange({ info }) {
+    const [name, setName] = useState('')
+    const [inn, setInn] = useState('')
+    const [phone, setPhone] = useState('')
+    const { signOut, doctorId } = useContext(GlobalContext)
     const navigation = useNavigation()
+
+    const changeUser = async () => {
+        const formData = new FormData()
+        formData.append('clientId', doctorId)
+        formData.append('name', name)
+        formData.append('inn', inn)
+        formData.append('phone', phone)
+        await fetch('https://finddel.ru/api/change_account', {
+            method: 'POST',
+            headers: {
+                ApiKey: 'Kv73gXP39dNSU39CBnd77Dmw',
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((s) => {
+                if (s) {
+                    Alert.alert(s.text)
+                    navigation.navigate('TabScreen')
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
+
+    useEffect(() => {
+        if (info) {
+            setName(info.name)
+            setInn(info.inn)
+            setPhone(info.phone)
+        }
+    }, [info])
     return (
         <>
             <Formik initialValues={{ name: '', phone: '', number: '' }} onSubmit={() => {}}>
@@ -21,7 +57,9 @@ export default function OrganizationChange() {
                             keyboard="default"
                             input={styles.input}
                             placeholder="Название компании"
-                            placeholderTextColor={COLORS.placeholderTextColor} />
+                            placeholderTextColor={COLORS.placeholderTextColor}
+                            value={name}
+                            onChange={setName} />
 
                         <InputLight
                             name="number"
@@ -29,7 +67,9 @@ export default function OrganizationChange() {
                             keyboard="default"
                             input={styles.input}
                             placeholder="ИНН"
-                            placeholderTextColor={COLORS.placeholderTextColor} />
+                            placeholderTextColor={COLORS.placeholderTextColor}
+                            value={inn}
+                            onChange={setInn} />
 
                         <InputLight
                             name="phone"
@@ -37,11 +77,13 @@ export default function OrganizationChange() {
                             keyboard="default"
                             input={styles.input}
                             placeholder="Ваш телефон"
-                            placeholderTextColor={COLORS.placeholderTextColor} />
+                            placeholderTextColor={COLORS.placeholderTextColor}
+                            value={phone}
+                            onChange={setPhone} />
 
                         <SuccessSubmitButton
                             text="Изменить"
-                            submitFunction={handleSubmit}
+                            submitFunction={() => changeUser()}
                         />
 
                         <TouchableOpacity

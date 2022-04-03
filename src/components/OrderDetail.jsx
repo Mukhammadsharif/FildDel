@@ -1,21 +1,57 @@
 import React from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, Linking, Alert, Platform } from 'react-native'
+import RNFetchBlob from 'rn-fetch-blob'
 import { COLORS } from '../utils/colors'
 import SuccessSubmitButton from './SuccessSubmitButton'
 
 export default function OrderDetail({ order }) {
+    const paySum = async () => {
+        const formData = new FormData()
+        formData.append('sum', order.price)
+        formData.append('orderid', order.id)
+        await fetch('https://finddel.server.paykeeper.ru/create', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => Linking.openURL(response.url))
+    }
+
+    const downloadFile = (url) => {
+        if (Platform.OS === 'ios') {
+            Linking.openURL(url.replace(' ', '%20'))
+        } else if (order.documents.length > 0 && order.documents[0][1]) {
+            const date = new Date()
+            const { config, fs } = RNFetchBlob
+            const { PictureDir } = fs.dirs
+            const options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path: `${PictureDir}/me_${Math.floor(date.getTime() + date.getSeconds() / 2)}`,
+                    description: 'Скачивание файла',
+                },
+            }
+            config(options).fetch('GET', url.replace(' ', '%20')).then((res) => {
+                console.log(res, 'response')
+            })
+        } else {
+            Alert.alert('На базе нет такого документа')
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                <View style={styles.downloadContainer}>
-                    <TouchableOpacity>
-                        <Text style={styles.downloadText}>Скачать Договор</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <Text style={[styles.downloadText, { width: 140 }]}>Скачать Накладная</Text>
-                    </TouchableOpacity>
-                </View>
+                {order.documents && order.documents.length ? (
+                    <View style={styles.downloadContainer}>
+                        {order.documents.length ? order.documents.map((item) => (
+                            <TouchableOpacity onPress={() => downloadFile(item[1])}>
+                                <Text style={styles.downloadText}>Скачать {item[0]}</Text>
+                            </TouchableOpacity>
+                        )) : null}
+                    </View>
+                ) : null}
 
                 <View style={styles.senderReceiverContainer}>
                     <View>
@@ -25,6 +61,7 @@ export default function OrderDetail({ order }) {
                             <Text style={styles.orderContentSecondText}>
                                 Отправитель:
                                 <Text style={styles.orderContentText}>
+                                    {/* eslint-disable-next-line max-len */}
                                     {order ? `${order.sender_surname} ${order.sender_name} ${order.sender_patronymic}` : ''}
                                 </Text>
                             </Text>
@@ -100,12 +137,12 @@ export default function OrderDetail({ order }) {
 
                     <Text style={styles.orderContentSecondText}>
                         Компания:
-                        <Text style={styles.orderContentText}> Название компании</Text>
+                        <Text style={styles.orderContentText}> {order.company_name}</Text>
                     </Text>
 
                     <Text style={styles.orderContentSecondText}>
                         Тариф:
-                        <Text style={styles.orderContentText}> Название тарифа</Text>
+                        <Text style={styles.orderContentText}> {order.tariff_name}</Text>
                     </Text>
 
                     <Text style={styles.orderContentSecondText}>
@@ -182,23 +219,23 @@ export default function OrderDetail({ order }) {
 
                     <Text style={styles.orderContentSecondText}>
                         Стоимость:
-                        <Text style={styles.orderContentText}> 1 228 ₽</Text>
+                        <Text style={styles.orderContentText}> {order ? order.price : ''} ₽</Text>
                     </Text>
                 </View>
 
                 <Text style={[styles.orderTitleText, { marginTop: 20 }]}>Состояние доставки</Text>
 
                 <Text style={[styles.orderContentSecondText, { marginTop: 10 }]}>
-                    Оформлен.
+                    {order ? order.order_status : ''}
                     <Text style={styles.orderContentText}>
                         {/* eslint-disable-next-line no-nested-ternary */}
-                        {order ? order.paid ? 'Оплачен' : 'Ожидает оплаты' : ''}
                     </Text>
                 </Text>
 
-                {order && !order.paid ? (
+                {order && order.ready_to_pay && !order.paid ? (
                     <SuccessSubmitButton
-                        text="Оплатить 1 228 ₽" />
+                        text={`Оплатить ${order.price} ₽`}
+                        submitFunction={() => paySum()} />
                 ) : null}
 
                 <Text style={styles.changeOrder}>Изменить данные о заказе</Text>

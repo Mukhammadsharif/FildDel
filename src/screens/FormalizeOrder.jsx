@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, Alert } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
@@ -68,6 +68,33 @@ export default function FormalizeOrder({ route }) {
                 console.error('Error:', error)
             })
     }
+
+    const checkUser = async () => {
+        const formData = new FormData()
+        formData.append('clientId', doctorId)
+        await fetch('https://finddel.ru/api/account_info', {
+            method: 'POST',
+            headers: {
+                ApiKey: 'Kv73gXP39dNSU39CBnd77Dmw',
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((s) => {
+                if (s) {
+                    setSenderEmail(s.email)
+                    setSenderName(s.name)
+                    setSenderPatronymic(s.patronymic)
+                    setSenderPhone(s.phone)
+                    setSenderSurname(s.surname)
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
+
+    useEffect(() => { checkUser() }, [doctorId])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -291,9 +318,9 @@ export default function FormalizeOrder({ route }) {
                                         navigation.navigate('OrderPay')
                                     }} />
 
-                                <SubmitButton
-                                    text="Сравнить цены"
-                                    submitFunction={() => navigation.goBack()} />
+                                {/* <SubmitButton */}
+                                {/*    text="Сравнить цены" */}
+                                {/*    submitFunction={() => navigation.goBack()} /> */}
 
                                 <Text style={styles.warning}>
                                     Счет для оплаты придет на почту отправителя.

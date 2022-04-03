@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, StyleSheet, ScrollView, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import { Card } from 'react-native-paper'
 import { BigUser, Organization, User } from '../components/Svgs'
@@ -7,9 +7,45 @@ import OrganizationCreate from '../components/OrganizationCreate'
 import ProfileChange from '../components/ProfileChange'
 import OrganizationChange from '../components/OrganizationChange'
 import { COLORS } from '../utils/colors'
+import { GlobalContext } from '../contexts/GlobalContext'
 
 export default function ProfileRegister({ route }) {
     const [user, setUser] = useState(false)
+    const { doctorId } = useContext(GlobalContext)
+    const [info, setInfo] = useState(null)
+
+    const checkUser = async () => {
+        const formData = new FormData()
+        formData.append('clientId', doctorId)
+        await fetch('https://finddel.ru/api/account_info', {
+            method: 'POST',
+            headers: {
+                ApiKey: 'Kv73gXP39dNSU39CBnd77Dmw',
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((s) => {
+                if (s) {
+                    setInfo(s)
+                    console.log(s)
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
+
+    useEffect(() => { checkUser() }, [doctorId])
+    useEffect(() => {
+        if (info) {
+            if (info.type_user !== 'Юридическое лицо') {
+                setUser(true)
+            } else {
+                setUser(false)
+            }
+        }
+    }, [info])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -28,8 +64,9 @@ export default function ProfileRegister({ route }) {
                                     </View>
 
                                     <View style={styles.textContainer}>
-                                        <Text style={styles.text}>Иванов Иван Иванович</Text>
-                                        <Text style={styles.textDisabled}>Загрузить аватар</Text>
+                                        <Text style={styles.text}>
+                                            {info ? `${info.surname} ${info.name} ${info.patronymic}` : ''}
+                                        </Text>
                                     </View>
                                 </View>
                             </Card>
@@ -45,8 +82,9 @@ export default function ProfileRegister({ route }) {
                                     </View>
 
                                     <View style={styles.textContainer}>
-                                        <Text style={styles.text}>ООО “Название”</Text>
-                                        <Text style={styles.textDisabled}>Изменить логотип</Text>
+                                        <Text style={styles.text}>
+                                            {info ? `ООО ${info.name}` : ''}
+                                        </Text>
                                     </View>
                                 </View>
                             </Card>
@@ -54,7 +92,7 @@ export default function ProfileRegister({ route }) {
                     )}
                 </View>
 
-                { user ? <ProfileChange /> : <OrganizationChange />}
+                { user ? <ProfileChange info={info} /> : <OrganizationChange info={info} />}
             </ScrollView>
         </SafeAreaView>
     )

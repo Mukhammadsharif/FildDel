@@ -1,13 +1,48 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext, useEffect } from 'react'
+import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, Alert } from 'react-native'
 import { Card } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
 import { COLORS } from '../utils/colors'
 import { Organization, User } from '../components/Svgs'
 import ProfileCreate from '../components/ProfileCreate'
 import OrganizationCreate from '../components/OrganizationCreate'
+import { GlobalContext } from '../contexts/GlobalContext'
 
 export default function Profile() {
     const [user, setUser] = useState(false)
+    const { doctorId } = useContext(GlobalContext)
+    const [info, setInfo] = useState(null)
+    const navigation = useNavigation()
+
+    const checkUser = async () => {
+        const formData = new FormData()
+        formData.append('clientId', doctorId)
+        await fetch('https://finddel.ru/api/account_info', {
+            method: 'POST',
+            headers: {
+                ApiKey: 'Kv73gXP39dNSU39CBnd77Dmw',
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((s) => {
+                if (s) {
+                    setInfo(s)
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
+
+    useEffect(() => { checkUser() }, [doctorId])
+    useEffect(() => {
+        if (info) {
+            if (info.name) {
+                navigation.navigate('ProfileRegister')
+            }
+        }
+    }, [info])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -40,7 +75,7 @@ export default function Profile() {
                     </TouchableOpacity>
                 </View>
 
-                { user ? <ProfileCreate /> : <OrganizationCreate />}
+                { user ? <ProfileCreate info={info} /> : <OrganizationCreate info={info} />}
             </ScrollView>
         </SafeAreaView>
     )

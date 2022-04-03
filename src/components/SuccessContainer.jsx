@@ -1,17 +1,8 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { SuccessTitle,
-    SuccessDescription,
-    TNT,
-    PEK,
-    LinesIcon,
-    KTC,
-    Baikal,
-    Dostavista,
-    DPD,
-    BuyButton,
-    TimeButton } from './Svgs'
+    SuccessDescription } from './Svgs'
 import { COLORS } from '../utils/colors'
 import SubmitButton from './SubmitButton'
 import RecommendationCard from './RecommentdationCard'
@@ -48,7 +39,10 @@ export default function SuccessContainer({ offers, selectedOffer, setSelectedOff
                         setSelectedOffer(item)
                         setPrice(item.price)
                     }}>
-                    <TNT width={115} height={22.59} style={{ flex: 1 }} />
+
+                    <Image
+                        source={{ uri: `https://finddel.ru/assets/images/content/logos/${item.company_logo.replace('svg', 'png')}` }}
+                        style={{ width: '30%', height: '60%' }} />
 
                     <View style={styles.descriptionContainer} />
 

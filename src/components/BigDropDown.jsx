@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { StyleSheet, ScrollView, TouchableOpacity, View, Text, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, ScrollView, TouchableOpacity, View, Text, TouchableWithoutFeedback, Platform } from 'react-native'
 import { COLORS } from '../utils/colors'
 import { Polygon } from './Svgs'
 
-export default function BigDropDown({ placeholder, selectedValue, setSelectedValue, data }) {
+export default function BigDropDown({ placeholder, selectedValue, setSelectedValue, data, zIndex = 1 }) {
     const [visible, setVisible] = useState(false)
     return (
-        <View>
+        <View style={Platform.OS === 'ios' ? { zIndex } : null}>
             <TouchableOpacity style={styles.container} onPress={() => setVisible(!visible)}>
                 <Text style={styles.placeholder}>{ selectedValue === '' ? placeholder : selectedValue }</Text>
 

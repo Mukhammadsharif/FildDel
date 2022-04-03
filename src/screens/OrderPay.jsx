@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, StyleSheet, Text, ScrollView, SafeAreaView, Alert } from 'react-native'
+import { View, StyleSheet, Text, ScrollView, SafeAreaView, Alert, Image, Linking } from 'react-native'
 import { COLORS } from '../utils/colors'
-import { TNT } from '../components/Svgs'
 import SuccessSubmitButton from '../components/SuccessSubmitButton'
 import { GlobalContext } from '../contexts/GlobalContext'
 
 export default function OrderPay() {
     const { doctorId, orderId, price } = useContext(GlobalContext)
     const [order, setOrder] = useState(null)
+    const [ready, setReady] = useState(false)
 
     const getOrderDetail = async () => {
         const formData = new FormData()
@@ -21,10 +21,11 @@ export default function OrderPay() {
             body: formData,
         })
             .then((response) => response.json())
-            .then((s) => {
+            .then(async (s) => {
                 if (s) {
-                    setOrder(s)
-                    Alert.alert(s.text)
+                    await setOrder(s)
+                    await setReady(s.ready_to_pay)
+                    console.log(s)
                 } else {
                     Alert.alert(s.text)
                 }
@@ -34,7 +35,18 @@ export default function OrderPay() {
             })
     }
 
-    useEffect(() => { getOrderDetail() }, [])
+    const paySum = async () => {
+        const formData = new FormData()
+        formData.append('sum', price)
+        formData.append('orderid', orderId)
+        await fetch('https://finddel.server.paykeeper.ru/create', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => Linking.openURL(response.url))
+    }
+
+    useEffect(() => { getOrderDetail() }, [doctorId, orderId])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -48,7 +60,11 @@ export default function OrderPay() {
 
                         <View style={styles.orderTitleFirstDetail}>
                             <Text style={styles.orderTitleText}>Доставка компанией</Text>
-                            <TNT width={110} height={21} />
+                            {order && order.company_logo ? (
+                                <Image
+                                    source={{ uri: `https://finddel.ru/assets/images/content/logos/${order.company_logo.replace('svg', 'png')}` }}
+                                    style={{ width: '50%', height: '50%' }} />
+                            ) : null}
                         </View>
 
                         <View style={styles.orderTitleSecondDetail}>
@@ -160,19 +176,40 @@ export default function OrderPay() {
                         <Text style={styles.orderTitleText}>Состояние доставки</Text>
 
                         <Text style={[styles.orderContentSecondText, { marginTop: 10 }]}>
-                            Сроки доставки:
+                            Статус доставки:
                             <Text style={[styles.orderContentText, { color: 'black' }]}>
                                 {order ? order.order_status : ''}
                             </Text>
                         </Text>
 
-                        <Text style={styles.orderContentSecondText}>Стоимость доставки:</Text>
+                        <Text style={[styles.orderContentSecondText]}>
+                            Стоимость доставки:
+                            <Text style={[styles.orderContentText, { color: 'black' }]}>
+                                {order ? order.price : ''} ₽
+                            </Text>
+                        </Text>
 
-                        <Text style={styles.priceText}>{price} ₽</Text>
+                        <Text style={[styles.orderContentSecondText]}>
+                            Сроки доставки:
+                            <Text style={[styles.orderContentText, { color: 'black' }]}>
+                                {order ? order.term : ''}
+                            </Text>
+                        </Text>
+
+                        {ready ? (
+                            <>
+                                <Text style={styles.orderContentSecondText}>Стоимость доставки:</Text>
+
+                                <Text style={styles.priceText}>{price} ₽</Text>
+                            </>
+                        ) : null}
                     </View>
 
-                    <SuccessSubmitButton
-                        text={`Оплатить ${price} ₽`} />
+                    {ready ? (
+                        <SuccessSubmitButton
+                            text={`Оплатить ${price} ₽`}
+                            submitFunction={() => paySum()} />
+                    ) : null}
 
                 </View>
 

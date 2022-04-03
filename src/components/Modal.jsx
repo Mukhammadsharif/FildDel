@@ -1,36 +1,33 @@
-import * as React from 'react';
-import { Modal, TouchableOpacity, StyleSheet, View } from "react-native";
-import { Card } from "react-native-paper";
-import { LoadingText } from "./Svgs";
+import * as React from 'react'
+import { Modal, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { Card } from 'react-native-paper'
 import Spinner from 'react-native-spinkit'
-import { COLORS } from "../utils/colors";
+import { LoadingText } from './Svgs'
+import { COLORS } from '../utils/colors'
 
-
-export default function CustomModal ({ modalVisible, setModalVisible })  {
-
-  return (
-      <Modal
-          onShow={() => setModalVisible(true)}
-          onRequestClose={() => setModalVisible(false)}
-          visible={modalVisible}
-          animationType={'fade'}
-          hardwareAccelerated={true}
-          transparent={true}
-          statusBarTranslucent>
-          <TouchableOpacity style={styles.modalContainer}>
-              <Card>
-                  <View style={styles.modalContent}>
-                      <Spinner
-                        type={'Circle'}
-                        color={COLORS.main}
-                        size={120}/>
-                      <LoadingText style={{marginTop: 31}}/>
-                  </View>
-              </Card>
-          </TouchableOpacity>
-      </Modal>
-  )
-
+export default function CustomModal({ modalVisible, setModalVisible }) {
+    return (
+        <Modal
+            onShow={() => setModalVisible(true)}
+            onRequestClose={() => setModalVisible(false)}
+            visible={modalVisible}
+            animationType="fade"
+            hardwareAccelerated
+            transparent
+            statusBarTranslucent>
+            <TouchableOpacity style={styles.modalContainer}>
+                <Card>
+                    <View style={styles.modalContent}>
+                        <Spinner
+                            type="Circle"
+                            color={COLORS.main}
+                            size={120} />
+                        <LoadingText style={{ marginTop: 31 }} />
+                    </View>
+                </Card>
+            </TouchableOpacity>
+        </Modal>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -47,5 +44,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
 })

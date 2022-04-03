@@ -1,16 +1,49 @@
-import React from 'react'
-import { View, StyleSheet, SafeAreaView, ScrollView, Text } from 'react-native'
+import React, { useContext, useState, useEffect } from 'react'
+import { View, StyleSheet, SafeAreaView, ScrollView, Text, Alert } from 'react-native'
 import { Card } from 'react-native-paper'
 import { Formik } from 'formik'
-import { pixelSizeHorizontal, pixelSizeVertical } from '../utils/normalizeStyle'
-import MainScreenBanner from '../components/MainScreenBanner'
+import { pixelSizeHorizontal } from '../utils/normalizeStyle'
 import { COLORS } from '../utils/colors'
 import InputLight from '../components/InputLight'
 import { CombinedIcon } from '../components/Svgs'
 import SubmitButton from '../components/SubmitButton'
 import Logos from '../components/Logos'
+import { GlobalContext } from '../contexts/GlobalContext'
 
 export default function ObservationScreen() {
+    const [number, setNumber] = useState('')
+    const [result, setResult] = useState('')
+    const { doctorId } = useContext(GlobalContext)
+    const getOrderDetail = async (orderId) => {
+        const formData = new FormData()
+        formData.append('clientId', doctorId)
+        formData.append('order_id', orderId)
+        await fetch('https://finddel.ru/api/order_info', {
+            method: 'POST',
+            headers: {
+                ApiKey: 'Kv73gXP39dNSU39CBnd77Dmw',
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then(async (s) => {
+                if (s) {
+                    console.log(s)
+                    setResult(s.order_status)
+                } else {
+                    Alert.alert(s.text)
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
+
+    useEffect(() => {
+        if (number === '') {
+            setResult('')
+        }
+    }, [number])
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -28,11 +61,18 @@ export default function ObservationScreen() {
                                     keyboard="default"
                                     input={styles.input}
                                     placeholder="1234567890"
-                                    placeholderTextColor={COLORS.placeholderTextColor} />
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={number}
+                                    onChange={setNumber} />
+
+                                {result ? (
+                                    <Text style={styles.cardNumber}>{result}</Text>
+                                ) : null}
 
                                 <SubmitButton
                                     text="Сравнить цены"
-                                    icon={<CombinedIcon style={{ marginLeft: 10 }} />} />
+                                    icon={<CombinedIcon style={{ marginLeft: 10 }} />}
+                                    submitFunction={() => getOrderDetail(number)} />
                             </View>
                         )}
                     </Formik>
@@ -53,7 +93,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cardContainer: {
-        height: 199,
         width: '100%',
         shadowColor: COLORS.shadowColor,
         shadowOffset: { width: 5, height: 5 },
@@ -64,6 +103,7 @@ const styles = StyleSheet.create({
         borderRadius: 0,
         flex: 6,
         paddingHorizontal: 20,
+        paddingBottom: 20,
     },
     title: {
         textAlignVertical: 'center',

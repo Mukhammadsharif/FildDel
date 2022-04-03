@@ -31,9 +31,11 @@ export default function HistoryScreen() {
             .then((s) => {
                 if (s.orders) {
                     setOrders(s.orders)
+                    console.log(s, 'ssss')
                     showHistory(true)
                 } else {
-                    Alert.alert(s.text)
+                    // Alert.alert(s.text)
+                    console.log(s)
                     showHistory(false)
                 }
             })
@@ -44,6 +46,7 @@ export default function HistoryScreen() {
     }
 
     useEffect(() => { getOrderHistory() }, [])
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -90,7 +93,7 @@ export default function HistoryScreen() {
                         </View>
 
                         <View>
-                            {orders ? orders.map((item) => (
+                            {orders ? orders.reverse().map((item) => (
                                 <HistoryDetailCard order={item} orders={orders} />
                             )) : null}
                         </View>

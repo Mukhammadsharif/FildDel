@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, Alert } from 'react-native'
 import { Formik } from 'formik'
 import { COLORS } from '../utils/colors'
@@ -40,7 +40,9 @@ export default function PlusScreen() {
     const [suggestions, setSuggestions] = useState('')
     const [toSuggestions, setToSuggestions] = useState('')
     const [selectedOffer, setSelectedOffer] = useState({})
-    const { doctorId, fromAddress, toAddress } = useContext(GlobalContext)
+    const [loading, setLoading] = useState('0')
+    const { doctorId, fromAddress, toAddress, type } = useContext(GlobalContext)
+    const scrollViewRef = useRef()
 
     const data = [
         { name: 'Конверт',
@@ -79,16 +81,34 @@ export default function PlusScreen() {
 
     const deliveryData = ['Склад-склад', 'Склад-дверь', 'От двери до двери', 'Дверь-склад']
 
+    const checkAllParams = () => {
+        if (!toggle) {
+            if (size && weight) {
+                getDelivers()
+            } else if (!size) {
+                Alert.alert('Укажите объем товара')
+            } else if (!weight) {
+                Alert.alert('Укажите вес товара')
+            }
+        } else if (count && weight) {
+            getDelivers()
+        } else if (!count) {
+            Alert.alert('Укажите количество товара')
+        } else if (!weight) {
+            Alert.alert('Укажите вес товара')
+        }
+    }
+
     const getDelivers = async () => {
         const formData = new FormData()
         formData.append('clientId', doctorId)
         formData.append('place_from', from)
         formData.append('place_to', to)
-        formData.append('length', length)
-        formData.append('width', width)
-        formData.append('height', height)
-        formData.append('volume', size)
-        formData.append('weight', weight)
+        formData.append('length', parseFloat(length))
+        formData.append('width', parseFloat(width))
+        formData.append('height', parseFloat(height))
+        formData.append('volume', parseFloat(size))
+        formData.append('weight', parseFloat(weight))
         count !== '' ? formData.append('count_places', count) : null
         formData.append('type_calculate', toggle ? count : size)
         formData.append('category_cargo', cargo)
@@ -97,6 +117,7 @@ export default function PlusScreen() {
         formData.append('cargo_insurance', firstRadio ? 1 : 0)
         formData.append('cargo_box', secondRadio ? 1 : 0)
         formData.append('distance', 100)
+        setModalVisible(true)
         await fetch('https://finddel.ru/api/get_deliveries_list', {
             method: 'POST',
             headers: {
@@ -110,6 +131,7 @@ export default function PlusScreen() {
                     setOffers(s.offers)
                     setModalVisible(false)
                     console.log(s)
+                    scrollViewRef.current.scrollToEnd({ animated: true })
                 } else {
                     Alert.alert(s.text)
                     setModalVisible(false)
@@ -147,15 +169,25 @@ export default function PlusScreen() {
         fetch(url, options)
             .then((response) => response.text())
             .then((result) => setSuggestions(JSON.parse(result)))
+            .then(() => setFromSug(true))
             .catch((error) => console.log('error', error))
     }
 
     useEffect(() => {
-        if (from !== '') {
-            getSuggestions()
-            setFromSug(!fromSug)
-        }
+        checkSugFrom()
     }, [from])
+
+    const checkSugFrom = () => {
+        if (from !== '' && !fromAddress) {
+            getSuggestions()
+            setFromSug(false)
+        } else if (fromAddress && from) {
+            if (fromAddress !== from) {
+                getSuggestions()
+                setFromSug(false)
+            }
+        }
+    }
 
     const getToSuggestions = async () => {
         const url = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address'
@@ -183,28 +215,69 @@ export default function PlusScreen() {
         fetch(url, options)
             .then((response) => response.text())
             .then((result) => setToSuggestions(JSON.parse(result)))
+            .then(() => setToSug(true))
             .catch((error) => console.log('error', error))
     }
 
     useEffect(() => {
-        if (to !== '') {
-            getToSuggestions()
-            setToSug(!toSug)
-        }
+        checkSugTo()
     }, [to])
+
+    const checkSugTo = () => {
+        if (to !== '' && !toAddress) {
+            getToSuggestions()
+            setToSug(false)
+        } else if (toAddress && to) {
+            if (toAddress !== to) {
+                getToSuggestions()
+                setToSug(false)
+            }
+        }
+    }
 
     useEffect(() => {
         if (fromAddress) {
             setFrom(fromAddress)
+            setFromSug(false)
         }
         if (toAddress) {
             setTo(toAddress)
         }
-    }, [fromAddress, toAddress])
+        if (type) {
+            setSelectedValue(type)
+        }
+    }, [fromAddress, toAddress, type])
+
+    const calc = async (size) => {
+        const result = (Math.cbrt(size) * 100).toPrecision(6)
+        await setHeight(result.toString())
+        await setWidth(result.toString())
+        await setLength(result.toString())
+    }
+
+    useEffect(() => {
+        if (size && size !== loading) {
+            calc(size)
+        }
+    }, [size])
+
+    useEffect(() => {
+        if (length && width && height) {
+            const result = ((length / 100) * (width / 100) * (height / 100)).toPrecision(3)
+            if (size !== result) {
+                setSize(result.toString())
+                setLoading(result.toString())
+            }
+        }
+    }, [length, width, height])
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 100 }}
+                ref={scrollViewRef}
+            >
                 <View style={{ paddingHorizontal: 15 }}>
                     <Text style={styles.title}>Подбор доставки</Text>
 
@@ -218,7 +291,7 @@ export default function PlusScreen() {
                             size: '',
                             count: '',
                             weight: '' }}
-                        onSubmit={() => {}}>
+                        onSubmit={() => {}} enableReinitialize>
                         {({ setFieldValue }) => (
 
                             <View>
@@ -281,7 +354,8 @@ export default function PlusScreen() {
                                     placeholder={deliveryData[0]}
                                     data={deliveryData}
                                     selectedValue={delivery}
-                                    setSelectedValue={setDelivery} />
+                                    setSelectedValue={setDelivery}
+                                    zIndex={9} />
 
                                 <Text style={styles.inputLabel}>Вид груза</Text>
 
@@ -295,9 +369,11 @@ export default function PlusScreen() {
                                     <View style={styles.load}>
                                         <Text style={styles.inputLabel}>Груз</Text>
                                         <DropDown
+                                            placeholder={cargoData[0]}
                                             data={cargoData}
                                             selectedValue={cargo}
                                             setSelectedValue={setCargo}
+                                            zIndex={14}
                                         />
                                     </View>
 
@@ -316,10 +392,10 @@ export default function PlusScreen() {
                                     </View>
                                 </View>
 
-                                <View style={styles.loadContainer}>
+                                <View style={[styles.loadContainer, { zIndex: -1 }]}>
                                     <View style={{ flex: 1, marginRight: 5 }}>
                                         <Text style={!toggle ? styles.inputLabel : styles.inputLabelDisabled}>
-                                            Объем, cм³
+                                            Объем, м³
                                         </Text>
 
                                         <InputLight
@@ -400,7 +476,8 @@ export default function PlusScreen() {
                                             placeholder="200"
                                             placeholderTextColor={COLORS.placeholderTextColor}
                                             value={height}
-                                            onChange={setHeight} />
+                                            onChange={setHeight}
+                                            editable />
                                     </View>
                                 </View>
 
@@ -438,8 +515,7 @@ export default function PlusScreen() {
                                 </View>
 
                                 <SubmitButton text="Сравнить цены" submitFunction={() => {
-                                    setModalVisible(true)
-                                    getDelivers()
+                                    checkAllParams()
                                 }} />
                             </View>
                         )}
@@ -451,11 +527,13 @@ export default function PlusScreen() {
                 ) : null }
 
                 { offers ? (
+
                     <SuccessContainer
                         offers={offers}
                         selectedOffer={selectedOffer}
                         setSelectedOffer={setSelectedOffer}
                     />
+
                 ) : null }
 
                 <CustomModal modalVisible={modalVisible} setModalVisible={setModalVisible} />

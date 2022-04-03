@@ -1,16 +1,42 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView } from "react-native"
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, Platform, Linking } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import {pixelSizeHorizontal} from "../utils/normalizeStyle"
-import {COLORS} from "../utils/colors"
-import {Cards, VectorBottomBlack, VectorTopBlack} from "../components/Svgs"
-import AboutDetail from "../components/AboutDetail";
-import PartnersDetail from "../components/PartnersDetail";
+import RNFetchBlob from 'rn-fetch-blob'
+import { pixelSizeHorizontal } from '../utils/normalizeStyle'
+import { COLORS } from '../utils/colors'
+import { Cards, VectorBottomBlack, VectorTopBlack } from '../components/Svgs'
+import AboutDetail from '../components/AboutDetail'
+import PartnersDetail from '../components/PartnersDetail'
 
 export default function MoreScreen() {
     const navigation = useNavigation()
     const [about, setAbout] = useState(false)
     const [partners, setPartners] = useState(false)
+
+    const downloadFile = () => {
+        // eslint-disable-next-line max-len
+        const url = 'https://finddel.ru/assets/static/%D0%94%D0%9E%D0%93%D0%9E%D0%92%D0%9E%D0%A0%20%D0%A2%D0%A0%D0%90%D0%9D%D0%A1%D0%9F%D0%9E%D0%A0%D0%A2%D0%9D%D0%9E%D0%99%20%D0%AD%D0%9A%D0%A1%D0%9F%D0%95%D0%94%D0%98%D0%A6%D0%98%D0%98%20FindDel.docx'
+        if (Platform.OS === 'ios') {
+            Linking.openURL(url)
+        } else {
+            const date = new Date()
+            const { config, fs } = RNFetchBlob
+            const { PictureDir } = fs.dirs
+            const options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path: `${PictureDir}/me_${Math.floor(date.getTime() + date.getSeconds() / 2)}`,
+                    description: 'Скачивание файла',
+                },
+            }
+            config(options).fetch('GET', url)
+                .then((res) => {
+                    console.log(res, 'response')
+                })
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -22,10 +48,10 @@ export default function MoreScreen() {
                     >
                         <Text style={styles.title}>О компании</Text>
 
-                        {about ? <VectorTopBlack/> : <VectorBottomBlack/>}
+                        {about ? <VectorTopBlack /> : <VectorBottomBlack />}
                     </TouchableOpacity>
 
-                    {about ? <AboutDetail/> : null}
+                    {about ? <AboutDetail /> : null}
                 </View>
 
                 <View style={styles.aboutContainer}>
@@ -35,10 +61,10 @@ export default function MoreScreen() {
                     >
                         <Text style={styles.title}>Наши партнеры</Text>
 
-                        {partners ? <VectorTopBlack/> : <VectorBottomBlack/>}
+                        {partners ? <VectorTopBlack /> : <VectorBottomBlack />}
                     </TouchableOpacity>
 
-                    {partners ? <PartnersDetail/> : null}
+                    {partners ? <PartnersDetail /> : null}
                 </View>
 
                 <View style={styles.contactContainer}>
@@ -68,8 +94,8 @@ export default function MoreScreen() {
                         <Text style={styles.touchableText}>Приглашение к сотрудничеству</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <Text style={[styles.touchableText, {textDecorationLine: 'underline'}]}>Договор</Text>
+                    <TouchableOpacity onPress={() => downloadFile()}>
+                        <Text style={[styles.touchableText, { textDecorationLine: 'underline' }]}>Договор</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate('PayRules')}>
@@ -81,9 +107,9 @@ export default function MoreScreen() {
                     </TouchableOpacity>
                 </View>
 
-               <View style={styles.cardsContainer}>
-                   <Cards/>
-               </View>
+                <View style={styles.cardsContainer}>
+                    <Cards />
+                </View>
 
                 <View style={styles.descriptionContainer}>
                     <Text style={styles.orderContentSecondText}>ООО «АрктикТранс»</Text>
