@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { View, StyleSheet, Text, KeyboardAvoidingView, Alert } from 'react-native'
+import { View, StyleSheet, Text, SafeAreaView, ScrollView, Alert, Platform } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
@@ -75,7 +75,7 @@ export default function ForgetPassword({ route }) {
             if (code === emailCode || code === secondCode) {
                 setSubmitted(true)
             } else {
-                console.log('ups')
+                Alert.alert('Неверный код')
             }
         }
 
@@ -83,65 +83,72 @@ export default function ForgetPassword({ route }) {
     }, [loading])
 
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="height">
-            <Text style={styles.title}>Введите код</Text>
+        <SafeAreaView style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{
+                    paddingHorizontal: Platform.OS === 'ios' ? 30 : 0,
+                    paddingTop: Platform.OS === 'ios' ? 50 : 0,
+                }}>
+                    <Text style={styles.title}>Введите код</Text>
 
-            <Text style={styles.description}>
-                Код отправлен на почту {email} Если не пришло письмо, проверьте «спам»
-            </Text>
+                    <Text style={styles.description}>
+                        Код отправлен на почту {email} Если не пришло письмо, проверьте «спам»
+                    </Text>
 
-            <Formik initialValues={{ code: '' }} onSubmit={() => {}}>
-                {({ handleSubmit }) => (
-                    <>
-                        <View style={styles.inputContainer}>
-                            <SmoothPinCodeInput
-                                value={code}
-                                onTextChange={(value) => setCode(value)}
-                                cellStyle={styles.cellStyle}
-                                textStyle={styles.textStyle}
-                                cellStyleFocused={styles.cellStyleFocused}
-                                autoFocus
-                                onFulfill={() => {
-                                    setLoading(true)
-                                }} />
-                        </View>
+                    <Formik initialValues={{ code: '' }} onSubmit={() => {}}>
+                        {({ handleSubmit }) => (
+                            <>
+                                <View style={styles.inputContainer}>
+                                    <SmoothPinCodeInput
+                                        value={code}
+                                        onTextChange={(value) => setCode(value)}
+                                        cellStyle={styles.cellStyle}
+                                        textStyle={styles.textStyle}
+                                        cellStyleFocused={styles.cellStyleFocused}
+                                        autoFocus
+                                        onFulfill={() => {
+                                            setLoading(true)
+                                        }} />
+                                </View>
 
-                        <View style={{ marginTop: 25 }}>
-                            {!submitted ? (
-                                <SubmitButton
-                                    text="Отправить еще раз"
-                                    submitFunction={() => {
-                                        getNumbers()
-                                        setCode('')
-                                    }} />
-                            ) : (
-                                <SecondSubmitButton
-                                    text="Войти"
-                                    submitFunction={() => {
-                                        registerAccount()
-                                        // navigation.navigate('TabScreen')
-                                    }} />
-                            )}
-                        </View>
-                    </>
-                )}
-            </Formik>
+                                <View style={{ marginTop: 25 }}>
+                                    {!submitted ? (
+                                        <SubmitButton
+                                            text="Отправить еще раз"
+                                            submitFunction={() => {
+                                                getNumbers()
+                                                setCode('')
+                                            }} />
+                                    ) : (
+                                        <SecondSubmitButton
+                                            text="Войти"
+                                            submitFunction={() => {
+                                                registerAccount()
+                                                // navigation.navigate('TabScreen')
+                                            }} />
+                                    )}
+                                </View>
+                            </>
+                        )}
+                    </Formik>
 
-            <NavigationButton
-                text="Назад"
-                submitFunction={() => navigation.goBack()}
-            />
-        </KeyboardAvoidingView>
+                    <NavigationButton
+                        text="Назад"
+                        submitFunction={() => navigation.goBack()}
+                    />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: pixelSizeHorizontal(30),
+        paddingHorizontal: pixelSizeHorizontal(20),
         paddingTop: pixelSizeVertical(50),
-        paddingBottom: pixelSizeVertical(202),
         backgroundColor: COLORS.mainBackground,
         flex: 1,
+        height: '100%',
     },
     input: {
         height: 50,

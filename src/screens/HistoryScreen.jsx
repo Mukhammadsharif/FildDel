@@ -6,8 +6,6 @@ import { pixelSizeHorizontal, pixelSizeVertical } from '../utils/normalizeStyle'
 import MainScreenBanner from '../components/MainScreenBanner'
 import { COLORS } from '../utils/colors'
 import InputLight from '../components/InputLight'
-import { PEK, TNT, VectorDown, VectorTop } from '../components/Svgs'
-import OrderDetail from '../components/OrderDetail'
 import HistoryDetailCard from '../components/HistoryDetailCared'
 import { GlobalContext } from '../contexts/GlobalContext'
 

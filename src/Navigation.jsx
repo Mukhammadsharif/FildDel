@@ -1,7 +1,8 @@
-import React, { useState, useContext, useCallback } from 'react'
+import React, { useState, useContext, useCallback, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
+import { Platform } from 'react-native'
 import FirstScreen from './screens/FirstScreen'
 import Register from './screens/Register'
 import HeaderTitle from './components/HeaderTitle'
@@ -27,12 +28,56 @@ import { COLORS } from './utils/colors'
 import StackHeader from './components/StackHeader'
 import ProfileHeaderTitle from './components/ProfileHeaderTitle'
 import { GlobalContext } from './contexts/GlobalContext'
+import { showNotification } from './notification.android'
+import { showNotificationIos } from './notification.ios'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 export default function Navigation() {
     const { doctorId } = useContext(GlobalContext)
+    const [orders, setOrders] = useState(null)
+
+    const getOrderHistory = async () => {
+        const formData = new FormData()
+        formData.append('clientId', doctorId)
+        await fetch('https://finddel.ru/api/orders', {
+            method: 'POST',
+            headers: {
+                ApiKey: 'Kv73gXP39dNSU39CBnd77Dmw',
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((s) => {
+                if (s.orders) {
+                    setOrders(s.orders)
+                } else {
+                    // Alert.alert(s.text)
+                    console.log(s)
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error)
+            })
+    }
+
+    useEffect(() => { setInterval(() => getOrderHistory(), 1800000) }, [])
+
+    useEffect(() => {
+        if (orders) {
+            const newStatusItem = orders.find((item) => item.new_order_status === 1)
+            if (newStatusItem) {
+                if (Platform.OS === 'ios') {
+                    showNotificationIos(`Изменение статуса по №${newStatusItem.id}`,
+                        newStatusItem.order_status)
+                } else {
+                    showNotification(`Изменение статуса по Заказу №${newStatusItem.id}`,
+                        newStatusItem.order_status)
+                }
+            }
+        }
+    }, [orders])
 
     const initial = doctorId ? 'TabScreen' : 'Register'
 

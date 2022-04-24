@@ -12,69 +12,75 @@ export default function HistoryDetailCard({ order, orders }) {
     oldTerm.setDate(termDay)
     const newTerm = oldTerm.toLocaleDateString()
 
+    // console.log(JSON.stringify(orders, ' ', 4))
+
     return (
         <>
-            <View style={orders.indexOf(order) % 2 !== 0 ? styles.firstOrderDetailContainer : styles.secondOrderDetailContainer}>
-                <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                    <View>
-                        <Text style={styles.orderTitleText}>Заказ №</Text>
+            {order.order_status !== 'Удален' ? (
+                <>
+                    <View style={orders.indexOf(order) % 2 !== 0 ? styles.firstOrderDetailContainer : styles.secondOrderDetailContainer}>
+                        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                            <View>
+                                <Text style={styles.orderTitleText}>Заказ №</Text>
 
-                        <Text style={styles.orderTitleDescriptionText}>{order.id}</Text>
+                                <Text style={styles.orderTitleDescriptionText}>{order.id}</Text>
+                            </View>
+
+                            <View style={{ flex: 0.5, justifyContent: 'space-between' }}>
+                                <Text style={styles.orderTitleText}>Доставка компанией</Text>
+                                <Image
+                                    source={{ uri: `https://finddel.ru/assets/images/content/logos/${order.company_logo.replace('svg', 'png')}` }}
+                                    style={{ width: '45%', height: '39%' }} />
+                            </View>
+                        </View>
+
+                        <View style={{ flex: 1.2, justifyContent: 'space-between' }}>
+                            <Text style={styles.orderTitleText}>Состояние доставки</Text>
+
+                            <View style={{ justifyContent: 'space-between' }}>
+                                <Text style={styles.orderContentSecondText}>
+                                    Оформлена:
+                                    <Text style={styles.orderContentText}>
+                                        {order ? order.dt.slice(0, 10) : ''}
+                                    </Text>
+                                </Text>
+
+                                {/* <Text style={styles.orderContentSecondText}> */}
+                                {/*    Сроки доставки: */}
+                                {/*    <Text style={styles.orderContentText}> */}
+                                {/*        {newTerm ? ` 20${newTerm.slice(6)}-${newTerm.slice(0, 2)}-${newTerm.slice(3, 5)}` : ''} */}
+                                {/*    </Text> */}
+                                {/* </Text> */}
+
+                                <Text style={styles.orderContentSecondText}>
+                                    Стоимость:
+                                    <Text style={styles.orderContentText}> {order.price} ₽</Text>
+                                </Text>
+                            </View>
+
+                            <TouchableOpacity
+                                style={styles.detailButton}
+                                onPress={() => setDetail(!detail)}
+                            >
+                                {!detail ? (
+                                    <>
+                                        <Text style={styles.linkContainer}>Подробнее</Text>
+                                        <VectorDown style={{ marginLeft: 5 }} />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Text style={styles.secondLinkContainer}>Скрыть</Text>
+                                        <VectorTop style={{ marginLeft: 5 }} />
+                                    </>
+                                )}
+
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
-                    <View style={{ flex: 0.5, justifyContent: 'space-between' }}>
-                        <Text style={styles.orderTitleText}>Доставка компанией</Text>
-                        <Image
-                            source={{ uri: `https://finddel.ru/assets/images/content/logos/${order.company_logo.replace('svg', 'png')}` }}
-                            style={{ width: '45%', height: '39%' }} />
-                    </View>
-                </View>
-
-                <View style={{ flex: 1.2, justifyContent: 'space-between' }}>
-                    <Text style={styles.orderTitleText}>Состояние доставки</Text>
-
-                    <View style={{ justifyContent: 'space-between' }}>
-                        <Text style={styles.orderContentSecondText}>
-                            Оформлена:
-                            <Text style={styles.orderContentText}>
-                                {order ? order.dt.slice(0, 10) : ''}
-                            </Text>
-                        </Text>
-
-                        <Text style={styles.orderContentSecondText}>
-                            Сроки доставки:
-                            <Text style={styles.orderContentText}>
-                                {newTerm ? ` 20${newTerm.slice(6)}-${newTerm.slice(0, 2)}-${newTerm.slice(3, 5)}` : ''}
-                            </Text>
-                        </Text>
-
-                        <Text style={styles.orderContentSecondText}>
-                            Стоимость:
-                            <Text style={styles.orderContentText}> {order.price} ₽</Text>
-                        </Text>
-                    </View>
-
-                    <TouchableOpacity
-                        style={styles.detailButton}
-                        onPress={() => setDetail(!detail)}
-                    >
-                        {!detail ? (
-                            <>
-                                <Text style={styles.linkContainer}>Подробнее</Text>
-                                <VectorDown style={{ marginLeft: 5 }} />
-                            </>
-                        ) : (
-                            <>
-                                <Text style={styles.secondLinkContainer}>Скрыть</Text>
-                                <VectorTop style={{ marginLeft: 5 }} />
-                            </>
-                        )}
-
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            {detail ? <OrderDetail order={order} /> : null}
+                    {detail ? <OrderDetail order={order} /> : null}
+                </>
+            ) : null}
         </>
     )
 }

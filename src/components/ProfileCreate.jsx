@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react'
-import { View, StyleSheet, Alert } from 'react-native'
+import { View, StyleSheet, Alert, Platform } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import { COLORS } from '../utils/colors'
 import InputLight from './InputLight'
-import SubmitButton from './SubmitButton'
 import SuccessSubmitButton from './SuccessSubmitButton'
 import { GlobalContext } from '../contexts/GlobalContext'
 
@@ -47,7 +46,7 @@ export default function ProfileCreate({ info }) {
         <>
             <Formik initialValues={{ surname: '', name: '', fullname: '', phone: '' }} onSubmit={() => {}}>
                 {({ handleSubmit }) => (
-                    <View>
+                    <View style={{ paddingHorizontal: Platform.OS === 'ios' ? 15 : 0 }}>
                         <InputLight
                             name="surname"
                             type="text"

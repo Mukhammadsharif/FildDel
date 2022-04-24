@@ -127,10 +127,11 @@ export default function PlusScreen() {
         })
             .then((response) => response.json())
             .then((s) => {
+                console.log(s, 'synta')
                 if (s.offers) {
                     setOffers(s.offers)
                     setModalVisible(false)
-                    console.log(s)
+                    console.log(s, 's')
                     scrollViewRef.current.scrollToEnd({ animated: true })
                 } else {
                     Alert.alert(s.text)

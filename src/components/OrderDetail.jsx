@@ -238,7 +238,7 @@ export default function OrderDetail({ order }) {
                         submitFunction={() => paySum()} />
                 ) : null}
 
-                <Text style={styles.changeOrder}>Изменить данные о заказе</Text>
+                {/* <Text style={styles.changeOrder}>Изменить данные о заказе</Text> */}
             </ScrollView>
         </SafeAreaView>
     )

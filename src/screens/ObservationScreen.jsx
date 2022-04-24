@@ -70,7 +70,7 @@ export default function ObservationScreen() {
                                 ) : null}
 
                                 <SubmitButton
-                                    text="Сравнить цены"
+                                    text="Отследить"
                                     icon={<CombinedIcon style={{ marginLeft: 10 }} />}
                                     submitFunction={() => getOrderDetail(number)} />
                             </View>

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, StyleSheet, Alert, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Alert, SafeAreaView, ScrollView, Text, TouchableOpacity, Platform } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import { COLORS } from '../utils/colors'
@@ -43,7 +43,7 @@ export default function OrganizationCreate() {
         <>
             <Formik initialValues={{ name: '', number: '' }} onSubmit={() => {}}>
                 {({ handleSubmit }) => (
-                    <View>
+                    <View style={{ paddingHorizontal: Platform.OS === 'ios' ? 15 : 0 }}>
                         <InputLight
                             name="surname"
                             type="text"

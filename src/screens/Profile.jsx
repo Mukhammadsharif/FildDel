@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, Alert } from 'react-native'
+import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, Platform } from 'react-native'
 import { Card } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { COLORS } from '../utils/colors'
@@ -94,12 +94,15 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica',
         fontWeight: 'bold',
         marginBottom: 20,
+        paddingHorizontal: Platform.OS === 'ios' ? 15 : 0,
+        paddingTop: Platform.OS === 'ios' ? 15 : 0,
     },
     cardsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         flex: 1,
         marginBottom: 10,
+        paddingHorizontal: Platform.OS === 'ios' ? 15 : 0,
     },
     cardDisabled: {
         height: 100,

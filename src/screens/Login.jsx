@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, StyleSheet, Text, KeyboardAvoidingView, Alert } from 'react-native'
+import { View, StyleSheet, Text, Alert, SafeAreaView, ScrollView, Platform } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import { pixelSizeHorizontal, pixelSizeVertical } from '../utils/normalizeStyle'
@@ -43,45 +43,52 @@ export default function Login() {
     }
 
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="height">
-            <Text style={styles.title}>Вход</Text>
+        <SafeAreaView style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{
+                    paddingHorizontal: Platform.OS === 'ios' ? 30 : 0,
+                    paddingTop: Platform.OS === 'ios' ? 50 : 0,
+                }}>
+                    <Text style={styles.title}>Вход</Text>
 
-            <Formik initialValues={{ email: '', password: '' }} onSubmit={() => {}}>
-                {({ handleSubmit }) => (
-                    <View style={styles.inputContainer}>
-                        <InputLight
-                            name="email"
-                            type="email"
-                            keyboard="default"
-                            input={styles.input}
-                            placeholder="E-mail"
-                            placeholderTextColor={COLORS.placeholderTextColor}
-                            value={email}
-                            onChange={setEmail} />
+                    <Formik initialValues={{ email: '', password: '' }} onSubmit={() => {}}>
+                        {({ handleSubmit }) => (
+                            <View style={styles.inputContainer}>
+                                <InputLight
+                                    name="email"
+                                    type="email"
+                                    keyboard="default"
+                                    input={styles.input}
+                                    placeholder="E-mail"
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={email}
+                                    onChange={setEmail} />
 
-                        <InputLight
-                            name="password"
-                            type="password"
-                            keyboard="default"
-                            input={styles.input}
-                            placeholder="Пароль"
-                            placeholderTextColor={COLORS.placeholderTextColor}
-                            value={password}
-                            onChange={setPassword} />
+                                <InputLight
+                                    name="password"
+                                    type="password"
+                                    keyboard="default"
+                                    input={styles.input}
+                                    placeholder="Пароль"
+                                    placeholderTextColor={COLORS.placeholderTextColor}
+                                    value={password}
+                                    onChange={setPassword} />
 
-                        <SubmitButton
-                            text="Войти"
-                            submitFunction={() => login()}
-                        />
-                    </View>
-                )}
-            </Formik>
+                                <SubmitButton
+                                    text="Войти"
+                                    submitFunction={() => login()}
+                                />
+                            </View>
+                        )}
+                    </Formik>
 
-            <NavigationButton
-                text="Забыл пароль"
-                submitFunction={() => navigation.navigate('ResetPassword')}
-            />
-        </KeyboardAvoidingView>
+                    <NavigationButton
+                        text="Забыл пароль"
+                        submitFunction={() => navigation.navigate('ResetPassword')}
+                    />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
@@ -89,10 +96,10 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: pixelSizeHorizontal(30),
         paddingTop: pixelSizeVertical(50),
-        paddingBottom: pixelSizeVertical(230),
         backgroundColor: COLORS.mainBackground,
         flex: 1,
         justifyContent: 'space-around',
+        height: '100%',
     },
     input: {
         height: 50,

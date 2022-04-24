@@ -7,6 +7,7 @@ import { COLORS } from '../utils/colors'
 import SubmitButton from './SubmitButton'
 import RecommendationCard from './RecommentdationCard'
 import { GlobalContext } from '../contexts/GlobalContext'
+import SuccessDetail from './SuccessDetail'
 
 export default function SuccessContainer({ offers, selectedOffer, setSelectedOffer }) {
     const navigation = useNavigation()
@@ -32,26 +33,12 @@ export default function SuccessContainer({ offers, selectedOffer, setSelectedOff
             </TouchableOpacity>
 
             { offers ? offers.map((item) => (
-                <TouchableOpacity
-                    style={item.offer_id === selectedOffer.offer_id ? styles.cardSelected : styles.card}
-                    onPress={() => {
-                        setSelectedOffer({})
-                        setSelectedOffer(item)
-                        setPrice(item.price)
-                    }}>
-
-                    <Image
-                        source={{ uri: `https://finddel.ru/assets/images/content/logos/${item.company_logo.replace('svg', 'png')}` }}
-                        style={{ width: '30%', height: '60%' }} />
-
-                    <View style={styles.descriptionContainer} />
-
-                    <Text style={styles.description}>
-                        {/* eslint-disable-next-line max-len */}
-                        {item.term.includes('менеджер') ? 'Уточняйте у менеджера' : `${item.term} дней`},      {item.price} ₽
-                    </Text>
-
-                </TouchableOpacity>
+                <SuccessDetail
+                    item={item}
+                    selectedOffer={selectedOffer}
+                    setSelectedOffer={setSelectedOffer}
+                    setPrice={setPrice}
+                />
             )) : null}
 
             <View style={{ paddingHorizontal: 15 }}>

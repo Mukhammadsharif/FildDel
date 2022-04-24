@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, Alert } from 'react-native'
+import { View, StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, Alert, Platform } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import { pixelSizeHorizontal } from '../utils/normalizeStyle'
@@ -121,7 +121,7 @@ export default function FormalizeOrder({ route }) {
                         <>
                             <Text style={styles.text}>Данные отправителя</Text>
 
-                            <View>
+                            <View style={{ paddingHorizontal: Platform.OS === 'ios' ? 15 : 0 }}>
                                 <Text style={styles.inputLabel}>Фамилия*</Text>
 
                                 <InputLight
@@ -196,85 +196,91 @@ export default function FormalizeOrder({ route }) {
                             </View>
 
                             <View style={{ marginVertical: 80 }}>
-                                <Text style={styles.text}>Данные получателья</Text>
+                                <Text style={styles.text}>Данные получателя</Text>
 
-                                <Text style={styles.inputLabel}>Фамилия*</Text>
+                                <View style={{ paddingHorizontal: Platform.OS === 'ios' ? 15 : 0 }}>
+                                    <Text style={styles.inputLabel}>Фамилия*</Text>
 
-                                <InputLight
-                                    name="receiverSurname"
-                                    type="text"
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder="Иванов"
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    value={recSurname}
-                                    onChange={setRecSurname} />
+                                    <InputLight
+                                        name="receiverSurname"
+                                        type="text"
+                                        keyboard="default"
+                                        input={styles.input}
+                                        placeholder="Иванов"
+                                        placeholderTextColor={COLORS.placeholderTextColor}
+                                        value={recSurname}
+                                        onChange={setRecSurname} />
 
-                                <Text style={styles.inputLabel}>Имя*</Text>
+                                    <Text style={styles.inputLabel}>Имя*</Text>
 
-                                <InputLight
-                                    name="receiverName"
-                                    type="text"
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder="Иван"
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    value={recName}
-                                    onChange={setRecName} />
+                                    <InputLight
+                                        name="receiverName"
+                                        type="text"
+                                        keyboard="default"
+                                        input={styles.input}
+                                        placeholder="Иван"
+                                        placeholderTextColor={COLORS.placeholderTextColor}
+                                        value={recName}
+                                        onChange={setRecName} />
 
-                                <Text style={styles.inputLabel}>Отчество</Text>
+                                    <Text style={styles.inputLabel}>Отчество</Text>
 
-                                <InputLight
-                                    name="receiverFullname"
-                                    type="text"
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder="Иванович"
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    value={recPatronymic}
-                                    onChange={setRecPatronymic} />
+                                    <InputLight
+                                        name="receiverFullname"
+                                        type="text"
+                                        keyboard="default"
+                                        input={styles.input}
+                                        placeholder="Иванович"
+                                        placeholderTextColor={COLORS.placeholderTextColor}
+                                        value={recPatronymic}
+                                        onChange={setRecPatronymic} />
 
-                                <Text style={styles.inputLabel}>Телефон*</Text>
+                                    <Text style={styles.inputLabel}>Телефон*</Text>
 
-                                <InputLight
-                                    name="receiverPhone"
-                                    type="text"
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder="+89876543210"
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    value={recPhone}
-                                    onChange={setRecPhone} />
+                                    <InputLight
+                                        name="receiverPhone"
+                                        type="text"
+                                        keyboard="default"
+                                        input={styles.input}
+                                        placeholder="+89876543210"
+                                        placeholderTextColor={COLORS.placeholderTextColor}
+                                        value={recPhone}
+                                        onChange={setRecPhone} />
 
-                                <Text style={styles.inputLabel}>E-mail*</Text>
+                                    <Text style={styles.inputLabel}>E-mail*</Text>
 
-                                <InputLight
-                                    name="receiverEmail"
-                                    type="email"
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder="Ivanov123@mail.ru"
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    value={recEmail}
-                                    onChange={setRecEmail} />
+                                    <InputLight
+                                        name="receiverEmail"
+                                        type="email"
+                                        keyboard="default"
+                                        input={styles.input}
+                                        placeholder="Ivanov123@mail.ru"
+                                        placeholderTextColor={COLORS.placeholderTextColor}
+                                        value={recEmail}
+                                        onChange={setRecEmail} />
 
-                                <Text style={styles.inputLabel}>Название компании</Text>
+                                    <Text style={styles.inputLabel}>Название компании</Text>
 
-                                <InputLight
-                                    name="receiverCompany"
-                                    type="text"
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder="Иванович"
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    value={recCompany}
-                                    onChange={setRecCompany} />
+                                    <InputLight
+                                        name="receiverCompany"
+                                        type="text"
+                                        keyboard="default"
+                                        input={styles.input}
+                                        placeholder="Иванович"
+                                        placeholderTextColor={COLORS.placeholderTextColor}
+                                        value={recCompany}
+                                        onChange={setRecCompany} />
+                                </View>
                             </View>
 
                             <View style={{ marginBottom: 80 }}>
                                 <Text style={styles.text}>Оплата</Text>
 
-                                <View style={{ flex: 1, flexDirection: 'row', marginTop: 25, marginBottom: 10 }}>
+                                <View style={{ flex: 1,
+                                    flexDirection: 'row',
+                                    marginTop: 25,
+                                    marginBottom: 10,
+                                    paddingHorizontal: Platform.OS === 'ios' ? 15 : 0 }}>
                                     <View style={{ flex: 1, flexDirection: 'row' }}>
                                         <Radio
                                             radio={paySender}
@@ -296,45 +302,47 @@ export default function FormalizeOrder({ route }) {
                                     </View>
                                 </View>
 
-                                <Text style={styles.inputLabel}>Комментарий</Text>
+                                <View style={{ paddingHorizontal: Platform.OS === 'ios' ? 15 : 0 }}>
+                                    <Text style={styles.inputLabel}>Комментарий</Text>
 
-                                <View style={{ marginRight: 5 }}>
-                                    <TextArea
-                                        name="comments"
-                                        type="text"
-                                        keyboard="default"
-                                        placeholder="Введите текст"
-                                        placeholderTextColor={COLORS.placeholderTextColor}
-                                        multiline
-                                        maxLength={500}
-                                        value={comment}
-                                        onChange={setComment} />
-                                </View>
+                                    <View style={{ marginRight: 5 }}>
+                                        <TextArea
+                                            name="comments"
+                                            type="text"
+                                            keyboard="default"
+                                            placeholder="Введите текст"
+                                            placeholderTextColor={COLORS.placeholderTextColor}
+                                            multiline
+                                            maxLength={500}
+                                            value={comment}
+                                            onChange={setComment} />
+                                    </View>
 
-                                <SuccessSubmitButton
-                                    text="Оформить"
-                                    submitFunction={() => {
-                                        orderOffer()
-                                        navigation.navigate('OrderPay')
-                                    }} />
+                                    <SuccessSubmitButton
+                                        text="Оформить"
+                                        submitFunction={() => {
+                                            orderOffer()
+                                            navigation.navigate('OrderPay')
+                                        }} />
 
-                                {/* <SubmitButton */}
-                                {/*    text="Сравнить цены" */}
-                                {/*    submitFunction={() => navigation.goBack()} /> */}
+                                    {/* <SubmitButton */}
+                                    {/*    text="Сравнить цены" */}
+                                    {/*    submitFunction={() => navigation.goBack()} /> */}
 
-                                <Text style={styles.warning}>
-                                    Счет для оплаты придет на почту отправителя.
-                                </Text>
-
-                                <Text style={styles.understanding}>
-                                    Нажимая на кнопку, вы соглашаетесь
-                                </Text>
-
-                                <TouchableOpacity>
-                                    <Text style={[styles.linkContainer, { color: COLORS.main }]}>
-                                        с политикой конфиденциальности.
+                                    <Text style={styles.warning}>
+                                        Счет для оплаты придет на почту отправителя.
                                     </Text>
-                                </TouchableOpacity>
+
+                                    <Text style={styles.understanding}>
+                                        Нажимая на кнопку, вы соглашаетесь
+                                    </Text>
+
+                                    <TouchableOpacity>
+                                        <Text style={[styles.linkContainer, { color: COLORS.main }]}>
+                                            с политикой конфиденциальности.
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </>
                     )}
@@ -359,6 +367,8 @@ const styles = StyleSheet.create({
         lineHeight: 22,
         height: 30,
         fontFamily: 'Helvetica',
+        paddingHorizontal: Platform.OS === 'ios' ? 15 : 0,
+        marginTop: Platform.OS === 'ios' ? 15 : 0,
     },
     inputLabel: {
         marginTop: 20,

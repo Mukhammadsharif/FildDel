@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Alert, Platform } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import { COLORS } from '../utils/colors'
@@ -49,7 +49,7 @@ export default function ProfileChange({ info }) {
         <>
             <Formik initialValues={{ email: '', phone: '' }} onSubmit={() => {}}>
                 {({ handleSubmit }) => (
-                    <View>
+                    <View style={{ paddingHorizontal: Platform.OS === 'ios' ? 15 : 0 }}>
                         <InputLight
                             name="email"
                             type="email"

@@ -1,13 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, StyleSheet, ScrollView, Text, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, StyleSheet, ScrollView, Text, TouchableOpacity, SafeAreaView, Image, Platform } from 'react-native'
 import { Card } from 'react-native-paper'
-import { BigUser, Organization, User } from '../components/Svgs'
-import ProfileCreate from '../components/ProfileCreate'
-import OrganizationCreate from '../components/OrganizationCreate'
+import { BigUser, Organization, OrgAvatar, User, UserAvatar } from '../components/Svgs'
 import ProfileChange from '../components/ProfileChange'
 import OrganizationChange from '../components/OrganizationChange'
 import { COLORS } from '../utils/colors'
 import { GlobalContext } from '../contexts/GlobalContext'
+import OrgAva from '../assests/images/organisation.png'
 
 export default function ProfileRegister({ route }) {
     const [user, setUser] = useState(false)
@@ -60,7 +59,7 @@ export default function ProfileRegister({ route }) {
                             <Card>
                                 <View style={styles.card}>
                                     <View style={styles.iconContainer}>
-                                        <BigUser />
+                                        <UserAvatar />
                                     </View>
 
                                     <View style={styles.textContainer}>
@@ -78,7 +77,7 @@ export default function ProfileRegister({ route }) {
                             <Card>
                                 <View style={styles.card}>
                                     <View style={styles.iconContainer}>
-                                        <BigUser />
+                                        <Image source={OrgAva} style={{ width: 70, height: 70 }} />
                                     </View>
 
                                     <View style={styles.textContainer}>
@@ -111,12 +110,15 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica',
         fontWeight: 'bold',
         marginBottom: 20,
+        paddingHorizontal: Platform.OS === 'ios' ? 15 : 0,
+        paddingTop: Platform.OS === 'ios' ? 15 : 0,
     },
     cardsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         flex: 1,
         marginBottom: 10,
+        paddingHorizontal: Platform.OS === 'ios' ? 15 : 0,
     },
     card: {
         height: 100,
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     text: {
-        fontSize: 16,
+        fontSize: 14,
         lineHeight: 22,
         fontFamily: 'Helvetica',
         color: 'black',

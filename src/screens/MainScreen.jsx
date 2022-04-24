@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native'
 import { Card } from 'react-native-paper'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
@@ -145,88 +145,90 @@ export default function MainScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
-                <MainScreenBanner />
+                <View style={{ paddingHorizontal: Platform.OS === 'ios' ? 15 : 0 }}>
+                    <MainScreenBanner />
 
-                <Text style={styles.text}>Сравнить цены</Text>
+                    <Text style={styles.text}>Сравнить цены</Text>
 
-                <Card style={styles.cardContainer}>
-                    <Formik initialValues={{ address: '', receive: '', convert: '' }} onSubmit={() => {}}>
-                        {({ handleSubmit }) => (
-                            <View>
-                                <Text style={styles.inputLabel}>Откуда</Text>
-                                <View style={styles.addressContainer}>
+                    <Card style={styles.cardContainer}>
+                        <Formik initialValues={{ address: '', receive: '', convert: '' }} onSubmit={() => {}}>
+                            {({ handleSubmit }) => (
+                                <View>
+                                    <Text style={styles.inputLabel}>Откуда</Text>
+                                    <View style={styles.addressContainer}>
+                                        <InputLight
+                                            name="address"
+                                            type="text"
+                                            keyboard="default"
+                                            input={styles.addressInput}
+                                            placeholder="Введите адрес отправления"
+                                            placeholderTextColor={COLORS.placeholderTextColor}
+                                            value={fromAddress}
+                                            onChange={setFromAddress} />
+
+                                        <TouchableOpacity
+                                            style={styles.leftRightContainer}
+                                            onPress={() => {
+                                                const change = fromAddress
+                                                setFromAddress(toAddress)
+                                                setToAddress(change)
+                                            }}
+                                        >
+                                            <LeftRight />
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    {fromSug ? (
+                                        <SuggestionScroll
+                                            visible={fromSug}
+                                            setVisible={setFromSug}
+                                            data={suggestions.suggestions}
+                                            setSelectedValue={setFromAddress} />
+                                    ) : null}
+
+                                    <Text style={styles.inputLabel}>Куда</Text>
                                     <InputLight
-                                        name="address"
+                                        name="receive"
                                         type="text"
                                         keyboard="default"
-                                        input={styles.addressInput}
+                                        input={styles.input}
                                         placeholder="Введите адрес отправления"
                                         placeholderTextColor={COLORS.placeholderTextColor}
-                                        value={fromAddress}
-                                        onChange={setFromAddress} />
+                                        value={toAddress}
+                                        onChange={setToAddress} />
 
-                                    <TouchableOpacity
-                                        style={styles.leftRightContainer}
-                                        onPress={() => {
-                                            const change = fromAddress
-                                            setFromAddress(toAddress)
-                                            setToAddress(change)
-                                        }}
-                                    >
-                                        <LeftRight />
-                                    </TouchableOpacity>
+                                    {toSug ? (
+                                        <SuggestionScroll
+                                            visible={toSug}
+                                            setVisible={setToSug}
+                                            data={toSuggestions.suggestions}
+                                            setSelectedValue={setToAddress} />
+                                    ) : null}
+
+                                    <Text style={styles.inputLabel}>Вид груза</Text>
+
+                                    <BigDropDown
+                                        selectedValue={selectedValue}
+                                        setSelectedValue={setSelectedValue}
+                                        placeholder="Конверт"
+                                        data={data}
+                                    />
+
+                                    <SubmitButton
+                                        text="Сравнить цены"
+                                        icon={<CombinedIcon style={{ marginLeft: 10 }} />}
+                                        submitFunction={() => {
+                                            navigation.navigate('PlusScreen')
+                                        }} />
                                 </View>
+                            )}
+                        </Formik>
+                    </Card>
 
-                                {fromSug ? (
-                                    <SuggestionScroll
-                                        visible={fromSug}
-                                        setVisible={setFromSug}
-                                        data={suggestions.suggestions}
-                                        setSelectedValue={setFromAddress} />
-                                ) : null}
+                    <Logos />
 
-                                <Text style={styles.inputLabel}>Куда</Text>
-                                <InputLight
-                                    name="receive"
-                                    type="text"
-                                    keyboard="default"
-                                    input={styles.input}
-                                    placeholder="Введите адрес отправления"
-                                    placeholderTextColor={COLORS.placeholderTextColor}
-                                    value={toAddress}
-                                    onChange={setToAddress} />
-
-                                {toSug ? (
-                                    <SuggestionScroll
-                                        visible={toSug}
-                                        setVisible={setToSug}
-                                        data={toSuggestions.suggestions}
-                                        setSelectedValue={setToAddress} />
-                                ) : null}
-
-                                <Text style={styles.inputLabel}>Вид груза</Text>
-
-                                <BigDropDown
-                                    selectedValue={selectedValue}
-                                    setSelectedValue={setSelectedValue}
-                                    placeholder="Конверт"
-                                    data={data}
-                                />
-
-                                <SubmitButton
-                                    text="Сравнить цены"
-                                    icon={<CombinedIcon style={{ marginLeft: 10 }} />}
-                                    submitFunction={() => {
-                                        navigation.navigate('PlusScreen')
-                                    }} />
-                            </View>
-                        )}
-                    </Formik>
-                </Card>
-
-                <Logos />
-
-                <Text style={styles.description}>Еще 1348 транспортных компаний</Text>
+                    <Text style={styles.description}>Еще 1348 транспортных компаний</Text>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
